@@ -1,9 +1,18 @@
+#include <exception>
 #include <iostream>
 #include <istream>
+#include <sstream>
+#include <stdexcept>
+
 
 int main()
 {
-	std::string str;
-	std::cin >> str;
-	std::istream v();
+	try
+	{
+		throw std::runtime_error("boom");
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
 }

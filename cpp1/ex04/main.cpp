@@ -1,6 +1,5 @@
-#include <ios>
-#include <fstream>
 #include <iostream>
+#include "FileReplacer.hpp"
 
 /*
 	std::fstream fs(argv[1], std::ios::in); // Ouverture pour la lecture
@@ -11,14 +10,8 @@ int main(int argc, char *argv[])
 {
 	if (argc == 4)
 	{
-		std::string replace_file = std::string(argv[1]) + ".replace";
-		std::fstream fs_src(argv[1], std::ios::out);
-		// File qui existe pas 
-		// File qui n'a pas les perm
-		std::fstream fs_dest(replace_file.c_str(), std::ios::out);
-		fs_src << "hello les gensssssssssss";
-
-		// pas oublier de close les fstream
+		FileReplacer job(argv[1], argv[2], argv[3]);
+		job.run();
 		return (0);
 	}
 	std::cout << "invalide nb argument\n";
