@@ -10,7 +10,7 @@ FileReplacer::FileReplacer(const std::string& src_file,
 
 bool	FileReplacer::run(void)
 {
-	std::ifstream fs(this->_source_file);
+	std::ifstream fs(this->_source_file.c_str());
 	try 
 	{
 		if (!fs.is_open()) throw std::runtime_error(ERROR_OPPENING_FILE);
@@ -55,7 +55,7 @@ const std::string	FileReplacer::replaceAll(const std::string& src)
 void	FileReplacer::writeDestFile(const std::string& dest)
 {
 	std::string dest_file(this->_source_file + ".replace");
-	std::ofstream fs(dest_file);
+	std::ofstream fs(dest_file.c_str());
 	
 	if (!fs.is_open()) throw std::runtime_error(ERROR_OPPENING_FILE);
 	fs << dest;
