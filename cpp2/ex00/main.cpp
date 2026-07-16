@@ -1,13 +1,14 @@
 #include "Fixed.hpp"
+#include <unistd.h>
 
 int main()
 {
 	Fixed a;
-	a.setRawBits(10);
-	Fixed b;
-
-	b = a;
-	std::cout << b.getRawBits() << '\n';
-
-	return (0);
+	Fixed b( a );
+	Fixed c;
+	c = b;
+	std::cout << a.getRawBits() << std::endl;
+	std::cout << b.getRawBits() << std::endl;
+	std::cout << c.getRawBits() << std::endl;
+	return 0;
 }
