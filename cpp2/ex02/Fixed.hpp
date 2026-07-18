@@ -27,15 +27,15 @@ class Fixed {
 	int		operator!=(const Fixed& rhs) const;
 
 	// arithmetic operators
-	int		operator+(const Fixed& rhs) const;
-	int		operator-(const Fixed& rhs) const;
-	int		operator*(const Fixed& rhs) const;
-	int		operator/(const Fixed& rhs) const;
+	Fixed	operator+(const Fixed& rhs) const;
+	Fixed	operator-(const Fixed& rhs) const;
+	Fixed	operator*(const Fixed& rhs) const;
+	Fixed	operator/(const Fixed& rhs) const;
 
 	// increment/decrement operator
-	Fixed&	operator++(int);
+	Fixed	operator++(int);
 	Fixed&	operator++(void);
-	Fixed&	operator--(int);
+	Fixed	operator--(int);
 	Fixed&	operator--(void);
 
 	// Contructor / Destructor

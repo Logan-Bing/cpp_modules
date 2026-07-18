@@ -70,73 +70,71 @@ int	Fixed::operator!=(const Fixed& rhs) const
 	return (this->value_ != rhs.getRawBits());
 }
 
-int	Fixed::operator+(const Fixed& rhs) const
+Fixed	Fixed::operator+(const Fixed& rhs) const
 {
-	return (this->value_ + rhs.value_);
+	return Fixed((this->value_ + rhs.value_));
 }
 
-int	Fixed::operator-(const Fixed& rhs) const
+Fixed	Fixed::operator-(const Fixed& rhs) const
 {
-	return (this->value_ - rhs.value_);
+	return Fixed((this->toFloat() - rhs.toFloat()));
 }
 
-int	Fixed::operator*(const Fixed& rhs) const
+Fixed	Fixed::operator*(const Fixed& rhs) const
 {
-	return (this->value_ * rhs.value_);
+	return Fixed((this->toFloat() * rhs.toFloat()));
 }
 
-int	Fixed::operator/(const Fixed& rhs) const
+Fixed	Fixed::operator/(const Fixed& rhs) const
 {
-	return (this->value_ / rhs.value_);
+	return Fixed((this->value_ / rhs.value_));
 }
 
-Fixed& Fixed::operator++(int)
+Fixed Fixed::operator++(int)
 {
 	Fixed old = *this;
-	operator++();
+	this->value_++;
 	return old;
 }
 
 Fixed& Fixed::operator++(void)
 {
+	++this->value_;
 	return *this;
 }
 
-// Fixed&		Fixed::operator--(int)
-// {
-// 	Fixed old = *this;
-// 	operator++();
-// 	return old;
-// }
+Fixed		Fixed::operator--(int)
+{
+	Fixed old = *this;
+	operator--();
+	return old;
+}
 
 Fixed&		Fixed::operator--(void)
 {
+	--this->value_;
 	return *this;
 }
+
 Fixed::Fixed(void): value_(0)
 {
-	std::cout << "Default constructor called\n";
 }
 
 Fixed::Fixed(const int v): value_(v << FRACTIONAL_BITS)
 {
-	std::cout << "Int constructor called\n";
 }
 
 Fixed::Fixed(const float v)
 {
 	this->value_ = static_cast<int>(roundf(v *(1 << FRACTIONAL_BITS)));
-	std::cout << "Float constructor called\n";
 }
 
 Fixed::Fixed(const Fixed& other): value_(other.value_)
 {
-	std::cout << "Copy constructor called\n";
 }
 
 Fixed& Fixed::operator=(const Fixed& other)
 {
-	std::cout << "Copy assignement operator called\n";
 	if (this == &other)
 		return (*this);
 	this->value_ = other.value_;
@@ -145,7 +143,6 @@ Fixed& Fixed::operator=(const Fixed& other)
 
 Fixed::~Fixed(void)
 {
-	std::cout << "Destructor called\n";
 }
 
 std::ostream& operator<<(std::ostream& stream, const Fixed& rhs)
