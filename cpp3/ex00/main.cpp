@@ -1,14 +1,24 @@
-#include "Fixed.hpp"
-#include <unistd.h>
+#include "ClapTrap.hpp"
 
 int main()
 {
-	Fixed a;
-	Fixed b( a );
-	Fixed c;
-	c = b;
-	std::cout << a.getRawBits() << std::endl;
-	std::cout << b.getRawBits() << std::endl;
-	std::cout << c.getRawBits() << std::endl;
+	ClapTrap trap_1;
+	ClapTrap trap_2("Trap");
+	ClapTrap trap_3(trap_2);
+
+	trap_1 = trap_2;
+
+	trap_1.attack("Ennemy");
+	trap_1.takeDamage(16);
+	trap_1.beRepaired(3);
+	trap_1.attack("Ennemy");
+	trap_1.beRepaired(3);
+	trap_1.attack("Ennemy");
+	trap_1.beRepaired(3);
+	trap_1.attack("Ennemy");
+	trap_1.beRepaired(3);
+	trap_1.attack("Ennemy");
+	trap_1.beRepaired(3);
+	trap_1.attack("Ennemy");
 	return 0;
 }

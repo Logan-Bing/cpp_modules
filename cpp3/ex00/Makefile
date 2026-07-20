@@ -1,7 +1,7 @@
 NAME = prog
 CC = c++
 CFLAGS = -std=c++98 -Wall -Wextra -Werror
-SRCS = main.cpp 
+SRCS = main.cpp ClapTrap.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
