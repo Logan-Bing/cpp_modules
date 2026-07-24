@@ -1,4 +1,5 @@
 #include "ClapTrap.hpp"
+#include <string>
 
 ClapTrap::ClapTrap(void):
 	name_(""),
@@ -10,7 +11,7 @@ ClapTrap::ClapTrap(void):
 }
 
 ClapTrap::ClapTrap(const std::string name):
-	name_(name + "_clap_name"),
+	name_(name),
 	hit_points_(10),
 	energy_points_(10),
 	attack_damage_(0)

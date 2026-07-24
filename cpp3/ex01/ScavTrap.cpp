@@ -1,6 +1,5 @@
 #include "ScavTrap.hpp"
 #include "ClapTrap.hpp"
-#include "DiamondTrap.hpp"
 
 ScavTrap::ScavTrap(void)
 {

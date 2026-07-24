@@ -5,9 +5,5 @@
 
 int main()
 {
-	DiamondTrap d1("logan");
-
-	d1.whoAmI();
-	d1.attack("ennemy");
 	return 0;
 }

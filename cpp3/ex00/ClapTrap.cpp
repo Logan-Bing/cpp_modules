@@ -1,7 +1,11 @@
 #include "ClapTrap.hpp"
 #include <string>
 
-ClapTrap::ClapTrap(void)
+ClapTrap::ClapTrap(void):
+	name_(""),
+	hit_points_(10),
+	energy_points_(10),
+	attack_damage_(0)
 {
 	std::cout << "ClapTrap Default Constuctor called\n";
 }
@@ -50,7 +54,13 @@ void	ClapTrap::attack(const std::string& target)
 {
 	if (this->energy_points_ < 1)
 	{
-		std::cout << "Not enougth energy points\n";
+		std::cout << "Not enough energy points\n";
+		return ;
+	}
+
+	if (hit_points_ <= 0)
+	{
+		std::cout << this->name_ + " is dead\n";
 		return ;
 	}
 
@@ -61,6 +71,12 @@ void	ClapTrap::attack(const std::string& target)
 
 void	ClapTrap::takeDamage(unsigned int amount)
 {
+	if (hit_points_ <= 0)
+	{
+		std::cout << this->name_ + " is dead\n";
+		return ;
+	}
+
 	amount > static_cast<unsigned int>(this->hit_points_) ? this->hit_points_ = 0 : this->hit_points_ -= amount;
 	std::cout << "ClapTrap " + this->name_ + " take " + std::to_string(amount) + " damage !\n";
 	std::cout << "LifePoints(" + this->name_ + "):" + std::to_string(this->hit_points_) + '\n';
@@ -70,7 +86,13 @@ void	ClapTrap::beRepaired(unsigned int amount)
 {
 	if (this->energy_points_ < 1)
 	{
-		std::cout << "Not enougth energy points\n";
+		std::cout << "Not enough energy points\n";
+		return ;
+	}
+	
+	if (hit_points_ <= 0)
+	{
+		std::cout << this->name_ + " is dead\n";
 		return ;
 	}
 
