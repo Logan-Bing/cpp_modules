@@ -1,5 +1,40 @@
 #include "Fixed.hpp"
 
+Fixed::Fixed(void): value_(0)
+{
+}
+
+Fixed::Fixed(const int v): value_(v << FRACTIONAL_BITS)
+{
+}
+
+Fixed::Fixed(const float v)
+{
+	this->value_ = static_cast<int>(roundf(v *(1 << FRACTIONAL_BITS)));
+}
+
+Fixed::Fixed(const Fixed& other): value_(other.value_)
+{
+}
+
+Fixed& Fixed::operator=(const Fixed& other)
+{
+	if (this == &other)
+		return (*this);
+	this->value_ = other.value_;
+	return (*this);
+}
+
+Fixed::~Fixed(void)
+{
+}
+
+std::ostream& operator<<(std::ostream& stream, const Fixed& rhs)
+{
+	stream << rhs.toFloat();
+	return (stream);
+}
+
 int	Fixed::toInt(void) const
 {
 	return this->value_ >> FRACTIONAL_BITS;
@@ -42,37 +77,37 @@ const Fixed&	Fixed::max(const Fixed& a, const Fixed& b)
 
 int	Fixed::operator<(const Fixed& rhs) const
 {
-	return (this->value_ < rhs.getRawBits());
+	return (this->toFloat() < rhs.toFloat());
 }
 
 int	Fixed::operator>(const Fixed& rhs) const
 {
-	return (this->value_ > rhs.getRawBits());
+	return (this->toFloat() > rhs.toFloat());
 }
 
 int	Fixed::operator==(const Fixed& rhs) const
 {
-	return (this->value_ == rhs.getRawBits());
+	return (this->toFloat() == rhs.toFloat());
 }
 
 int	Fixed::operator>=(const Fixed& rhs) const
 {
-	return (this->value_ >= rhs.getRawBits());
+	return (this->toFloat() >= rhs.toFloat());
 }
 
 int	Fixed::operator<=(const Fixed& rhs) const
 {
-	return (this->value_ <= rhs.getRawBits());
+	return (this->toFloat() <= rhs.toFloat());
 }
 
 int	Fixed::operator!=(const Fixed& rhs) const
 {
-	return (this->value_ != rhs.getRawBits());
+	return (this->toFloat() != rhs.toFloat());
 }
 
 Fixed	Fixed::operator+(const Fixed& rhs) const
 {
-	return Fixed((this->value_ + rhs.value_));
+	return Fixed(this->toFloat() + rhs.toFloat());
 }
 
 Fixed	Fixed::operator-(const Fixed& rhs) const
@@ -87,7 +122,7 @@ Fixed	Fixed::operator*(const Fixed& rhs) const
 
 Fixed	Fixed::operator/(const Fixed& rhs) const
 {
-	return Fixed((this->value_ / rhs.value_));
+	return Fixed((this->toFloat() / rhs.toFloat()));
 }
 
 Fixed Fixed::operator++(int)
@@ -116,37 +151,3 @@ Fixed&		Fixed::operator--(void)
 	return *this;
 }
 
-Fixed::Fixed(void): value_(0)
-{
-}
-
-Fixed::Fixed(const int v): value_(v << FRACTIONAL_BITS)
-{
-}
-
-Fixed::Fixed(const float v)
-{
-	this->value_ = static_cast<int>(roundf(v *(1 << FRACTIONAL_BITS)));
-}
-
-Fixed::Fixed(const Fixed& other): value_(other.value_)
-{
-}
-
-Fixed& Fixed::operator=(const Fixed& other)
-{
-	if (this == &other)
-		return (*this);
-	this->value_ = other.value_;
-	return (*this);
-}
-
-Fixed::~Fixed(void)
-{
-}
-
-std::ostream& operator<<(std::ostream& stream, const Fixed& rhs)
-{
-	stream << rhs.toFloat();
-	return (stream);
-}
