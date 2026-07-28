@@ -2,6 +2,7 @@
 #define __CLAPTRAP_HPP__
 
 #include <iostream>
+#include <string>
 
 class ClapTrap {
  public:
@@ -23,6 +24,8 @@ class ClapTrap {
 	int			energy_points_;
 	int			attack_damage_;
 };
+
+const	std::string	ft_toString(int n);
 
 #endif
 

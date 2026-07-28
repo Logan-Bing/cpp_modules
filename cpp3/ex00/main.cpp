@@ -1,5 +1,4 @@
 #include "ClapTrap.hpp"
-#include <iomanip>
 
 int main()
 {
@@ -12,22 +11,27 @@ int main()
 	std::cout << "--\n";
 
 	// Basic tests
-	trap_1.attack("Ennemy");
-	trap_1.takeDamage(4);
-	trap_1.beRepaired(10);
-	std::cout << "------------------ END ------------------\n";
+	std::cout << "BASIC TEST\n";
+	std::cout << "\t"; trap_1.attack("Ennemy");
+	std::cout << "\t"; trap_1.takeDamage(4);
+	std::cout << "\t"; trap_1.beRepaired(10);
+	std::cout << "--\n";
 
-	std::cout << "------------------ NOT ENOUGH POINTS TESTS ------------------\n";
+	std::cout << "NOT ENOUGH POINTS TESTS\n";
 	for (int i = 0; i < 10; i++)
+	{
+		std::cout << "\t";
 		trap_2.attack("Ennemy");
+	}
+	std::cout << "\t";
 	trap_2.attack("Ennemy");
-	std::cout << "------------------ END ------------------\n";
+	std::cout << "--\n";
 
-	std::cout << "------------------ CLAPTRAP DEAD TESTS ------------------\n";
-	trap_3.takeDamage(100);
-	trap_3.attack("Ennemy");
-	trap_3.beRepaired(100);
-	std::cout << "------------------ END ------------------\n";
+	std::cout << "CLAPTRAP DEAD TESTS\n";
+	std::cout << "\t"; trap_3.takeDamage(100);
+	std::cout << "\t"; trap_3.attack("Ennemy");
+	std::cout << "\t"; trap_3.beRepaired(100);
+	std::cout << "--\n";
 
 
 	return 0;
