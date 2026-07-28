@@ -1,4 +1,5 @@
 #include "DiamondTrap.hpp"
+#include "ClapTrap.hpp"
 #include "FragTrap.hpp"
 #include "ScavTrap.hpp"
 
@@ -8,7 +9,6 @@ DiamondTrap::DiamondTrap(void)
 }
 
 DiamondTrap::DiamondTrap(const std::string& name):
-	ClapTrap(name),
 	name_(name)
 {
 	this->hit_points_ = FragTrap::hit_points_;
@@ -16,11 +16,24 @@ DiamondTrap::DiamondTrap(const std::string& name):
 	this->attack_damage_ = FragTrap::attack_damage_;
 }
 
-DiamondTrap::DiamondTrap(const DiamondTrap& other): name_(other.name_){}
-
 DiamondTrap::~DiamondTrap(void)
 {
 	std::cout << "DiamondTrap Destructor called\n";
+}
+
+int		DiamondTrap::getEnergyPoints(void) const
+{
+	return this->energy_points_;
+}
+
+int		DiamondTrap::getHitPoints(void) const
+{
+	return this->hit_points_;
+}
+
+int		DiamondTrap::getAttackDamage(void) const
+{
+	return this->attack_damage_;
 }
 
 void	DiamondTrap::whoAmI()

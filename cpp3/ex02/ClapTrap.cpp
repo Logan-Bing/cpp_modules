@@ -1,6 +1,4 @@
 #include "ClapTrap.hpp"
-#include <sstream>
-#include <string>
 
 ClapTrap::ClapTrap(void):
 	name_(""),

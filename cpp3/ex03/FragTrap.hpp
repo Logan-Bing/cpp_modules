@@ -4,7 +4,7 @@
 #include "ClapTrap.hpp"
 #include <iostream>
 
-class FragTrap: virtual public ClapTrap {
+class FragTrap: public ClapTrap {
  public:
   // Constuctor/Destructor
   FragTrap(void);
