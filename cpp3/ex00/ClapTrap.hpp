@@ -25,7 +25,5 @@ class ClapTrap {
 	int			attack_damage_;
 };
 
-const	std::string	ft_toString(int n);
-
 #endif
 

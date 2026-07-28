@@ -5,5 +5,8 @@
 
 int main()
 {
+	DiamondTrap d;
+
+	d.attack("target");
 	return 0;
 }

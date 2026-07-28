@@ -1,6 +1,4 @@
 #include "ClapTrap.hpp"
-#include <sstream>
-#include <string>
 
 ClapTrap::ClapTrap(void):
 	name_(""),
@@ -20,13 +18,10 @@ ClapTrap::ClapTrap(const std::string name):
 	std::cout << "ClapTrap Constuctor with name called\n";
 }
 
-ClapTrap::ClapTrap(const ClapTrap& other):
-	name_(other.name_),
-	hit_points_(other.hit_points_),
-	energy_points_(other.energy_points_),
-	attack_damage_(other.attack_damage_)
+ClapTrap::ClapTrap(const ClapTrap& other)
 {
-	std::cout << "ClapTrap Copy Constuctor called\n";
+	std::cout << "ClapTrap Copy Constuctor called\n\t";
+	*this = other;
 }
 
 ClapTrap&	ClapTrap::operator=(const ClapTrap& rhs)
@@ -66,8 +61,8 @@ void	ClapTrap::attack(const std::string& target)
 	}
 
 	this->energy_points_--;
-	std::cout << "ClapTrap " + this->name_ + " attacks " + target + ", causing " + ft_toString(this->attack_damage_) + " points of damage !\n\t";
-	std::cout << "EnergyPoints(" + this->name_ + "):" + ft_toString(this->energy_points_) + '\n';
+	std::cout << "ClapTrap " + this->name_ + " attacks " + target + ", causing " << this->attack_damage_<< " points of damage !\n\t";
+	std::cout << "EnergyPoints(" + this->name_ + "):" << this->energy_points_ << '\n';
 }
 
 void	ClapTrap::takeDamage(unsigned int amount)
@@ -79,8 +74,8 @@ void	ClapTrap::takeDamage(unsigned int amount)
 	}
 
 	amount > static_cast<unsigned int>(this->hit_points_) ? this->hit_points_ = 0 : this->hit_points_ -= amount;
-	std::cout << "ClapTrap " + this->name_ + " take " + ft_toString(amount) + " damage !\n\t";
-	std::cout << "LifePoints(" + this->name_ + "):" + ft_toString(this->hit_points_) + '\n';
+	std::cout << "ClapTrap " + this->name_ + " take " << amount << " damage !\n\t";
+	std::cout << "LifePoints(" + this->name_ + "):" << this->hit_points_ + '\n';
 }
 
 void	ClapTrap::beRepaired(unsigned int amount)
@@ -100,18 +95,7 @@ void	ClapTrap::beRepaired(unsigned int amount)
 	this->hit_points_ += amount;
 	this->energy_points_--;
 
-	std::cout << "ClapTrap " + this->name_ + " repairs itself " + ft_toString(amount) + " points !\n\t";
-	std::cout << "LifePoints(" + this->name_ + "):" + ft_toString(this->hit_points_) + "\n\t";
-	std::cout << "EnergyPoints(" + this->name_ + "):" + ft_toString(this->energy_points_) + '\n';
+	std::cout << "ClapTrap " + this->name_ + " repairs itself " << amount << " points !\n\t";
+	std::cout << "LifePoints(" + this->name_ + "):" << this->hit_points_ << "\n\t";
+	std::cout << "EnergyPoints(" + this->name_ + "):" << this->energy_points_ << '\n';
 }
-
-const	std::string	ft_toString(int n)
-{
-	std::ostringstream str;
-	std::string res;
-
-	str << n;
-	res = str.str();
-
-	return res;
-};

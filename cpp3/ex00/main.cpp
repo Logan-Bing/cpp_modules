@@ -2,7 +2,6 @@
 
 int main()
 {
-
 	std::cout << "INIT\n";
 	std::cout << "\t"; ClapTrap trap_1;
 	std::cout << "\t"; ClapTrap trap_2("Trap");
@@ -33,6 +32,6 @@ int main()
 	std::cout << "\t"; trap_3.beRepaired(100);
 	std::cout << "--\n";
 
-
+	std::cout << "DESTRUCTOR\n";
 	return 0;
 }

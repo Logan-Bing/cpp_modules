@@ -21,15 +21,21 @@ ScavTrap::ScavTrap(const ScavTrap& other): ClapTrap(other)
 
 ScavTrap&	ScavTrap::operator=(const ScavTrap& rhs)
 {
-	std::cout << "ScavTrap copy operator called\n";
 	if (this != &rhs)
 		ClapTrap::operator=(rhs);
+	std::cout << "ScavTrap copy operator called\n";
 	return *this;
 }
 
 ScavTrap::~ScavTrap(void)
 {
 	std::cout << "ScavTrap Destructor called\n";
+}
+
+void	ScavTrap::setEnergyPoints(int ep)
+{
+	std::cout << "EnergyPoints set has: " << ep << std::endl;
+	this->energy_points_ = ep;
 }
 
 void	ScavTrap::attack(const std::string& target)
@@ -47,8 +53,8 @@ void	ScavTrap::attack(const std::string& target)
 	}
 
 	this->energy_points_--;
-	std::cout << "ScavTrap " + this->name_ + " attacks " + target + ", causing " + std::to_string(this->attack_damage_) + " points of damage !\n";
-	std::cout << "EnergyPoints(" + this->name_ + "):" + std::to_string(this->energy_points_) + '\n';
+	std::cout << "ScavTrap " + this->name_ + " attacks " + target + ", causing " << this->attack_damage_<< " points of damage !\n\t";
+	std::cout << "EnergyPoints(" + this->name_ + "):" << this->energy_points_ << '\n';
 }
 
 void	ScavTrap::guardGate(void)

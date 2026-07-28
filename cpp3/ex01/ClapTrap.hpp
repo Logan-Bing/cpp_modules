@@ -2,6 +2,7 @@
 #define __CLAPTRAP_HPP__
 
 #include <iostream>
+#include <sstream>
 
 class ClapTrap {
  public:
