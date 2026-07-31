@@ -1,8 +1,11 @@
 #include "FragTrap.hpp"
 
-FragTrap::FragTrap(void)
+FragTrap::FragTrap(void): ClapTrap()
 {
-	std::cout << "FragTrap Default Constuctor called\n";
+	std::cout << "FragTrap Default Constuctor called\n\t";
+	this->hit_points_ = 100;
+	this->energy_points_ = 100;
+	this->attack_damage_ = 30;
 }
 
 FragTrap::FragTrap(const std::string& name): ClapTrap(name)
@@ -10,7 +13,7 @@ FragTrap::FragTrap(const std::string& name): ClapTrap(name)
 	this->hit_points_ = 100;
 	this->energy_points_ = 100;
 	this->attack_damage_ = 30;
-	std::cout << "FragTrap Constuctor with name called\n";
+	std::cout << "FragTrap Constuctor with name called\n\t";
 }
 
 FragTrap::FragTrap(const FragTrap& other): ClapTrap(other)

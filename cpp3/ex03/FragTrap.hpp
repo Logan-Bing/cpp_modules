@@ -2,9 +2,8 @@
 #define __FRAGTRAP_HPP__
 
 #include "ClapTrap.hpp"
-#include <iostream>
 
-class FragTrap: public ClapTrap {
+class FragTrap: virtual public ClapTrap {
  public:
   // Constuctor/Destructor
   FragTrap(void);
