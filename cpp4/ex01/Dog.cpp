@@ -1,6 +1,6 @@
 #include "Dog.hpp"
 
-Dog::Dog(void): Animal("Dog")
+Dog::Dog(void): Animal()
 {
 	this->type_ = "Dog";
 	std::cout << "\tDog Default Constuctor called\n";
