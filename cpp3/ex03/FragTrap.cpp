@@ -18,12 +18,12 @@ FragTrap::FragTrap(const std::string& name): ClapTrap(name)
 
 FragTrap::FragTrap(const FragTrap& other): ClapTrap(other)
 {
-	std::cout << "FragTrap Copy Constuctor called\n";
+	std::cout << "FragTrap Copy Constuctor called\n\t";
 }
 
 FragTrap&	FragTrap::operator=(const FragTrap& rhs)
 {
-	std::cout << "FragTrap copy operator called\n";
+	std::cout << "FragTrap copy operator called\n\t";
 	if (this != &rhs)
 		ClapTrap::operator=(rhs);
 	return *this;

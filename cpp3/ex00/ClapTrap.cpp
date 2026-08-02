@@ -18,19 +18,17 @@ ClapTrap::ClapTrap(const std::string name):
 	std::cout << "ClapTrap Constuctor with name called\n";
 }
 
-ClapTrap::ClapTrap(const ClapTrap& other)
+ClapTrap::ClapTrap(const ClapTrap& other):
+	name_(other.name_),
+	hit_points_(other.hit_points_),
+	energy_points_(other.energy_points_),
+	attack_damage_(other.attack_damage_)
 {
-	std::cout << "ClapTrap Copy Constuctor called\n\t";
-	*this = other;
+	std::cout << "ClapTrap Copy Constuctor called\n";
 }
 
 ClapTrap&	ClapTrap::operator=(const ClapTrap& rhs)
 {
-	// Protection (surtout utilile quand on utilise la heap)
-	/*
-	 * delete this->value_
-	 * this->value = rhs.value_ (rhs.value_) n'existe plus !
-	*/
 	std::cout << "ClapTrap copy operator called\n";
 	if (this == &rhs)
 		return *this;
@@ -75,7 +73,7 @@ void	ClapTrap::takeDamage(unsigned int amount)
 
 	amount > static_cast<unsigned int>(this->hit_points_) ? this->hit_points_ = 0 : this->hit_points_ -= amount;
 	std::cout << "ClapTrap " + this->name_ + " take " << amount << " damage !\n\t";
-	std::cout << "LifePoints(" + this->name_ + "):" << this->hit_points_ + '\n';
+	std::cout << "LifePoints(" + this->name_ + "):" << this->hit_points_ << std::endl;
 }
 
 void	ClapTrap::beRepaired(unsigned int amount)

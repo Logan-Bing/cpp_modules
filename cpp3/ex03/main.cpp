@@ -30,9 +30,6 @@ int main()
 	std::cout << "\t"; trap_3.beRepaired(100);
 	std::cout << "--\n";
 
-	std::cout << "MORE TESTS\n";
-	std::cout << "--\n";
-
 	std::cout << "DESTRUCTOR\n";
 
 	return 0;
