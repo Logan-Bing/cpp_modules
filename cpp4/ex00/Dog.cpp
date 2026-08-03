@@ -2,7 +2,6 @@
 
 Dog::Dog(void): Animal("Dog")
 {
-	this->type_ = "Dog";
 	std::cout << "\tDog Default Constuctor called\n";
 }
 

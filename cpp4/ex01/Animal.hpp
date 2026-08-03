@@ -7,6 +7,7 @@ class Animal {
  public:
   // Constuctor/Destructor
   Animal(void);
+  Animal(const std::string& type);
   Animal(const Animal& other);
   Animal& operator=(const Animal& rhs);
   virtual ~Animal(void);

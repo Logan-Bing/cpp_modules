@@ -2,6 +2,7 @@
 #define __BRAIN_HPP__
 
 #include <iostream>
+#include <ostream>
 
 #define SIZE_IDEAS 100
 
@@ -13,8 +14,11 @@ class Brain {
   Brain& operator=(const Brain& rhs);
   ~Brain(void);
 
+  std::string& operator[](std::size_t idx);
+  const std::string& operator[](std::size_t idx) const;
+
  private:
-  std::string ideas[SIZE_IDEAS];
+  std::string ideas_[SIZE_IDEAS];
 
 };
 

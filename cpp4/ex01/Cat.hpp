@@ -14,6 +14,8 @@ class Cat: public Animal {
   ~Cat(void);
 
   void	makeSound(void) const;
+  std::string& operator[](std::size_t idx);
+  const std::string& operator[](std::size_t idx) const;
 
  private:
 	Brain* brain;

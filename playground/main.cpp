@@ -3,33 +3,38 @@
 #include <istream>
 #include <sstream>
 #include <stdexcept>
+#include <string>
 
 
 class Base {
 	public:
-		Base(std::string name): name_(name + "suffix"){}
+		Base() { std::cout << "Base Default constructor called\n"; }
+		
 		std::string name_;
 };
 
-class Derived: public Base {
+class Derived: virtual public Base
+{
 	public:
-		Derived(std::string name): Base(name){}
-		void attack(void)
-		{
-			std::cout << this->name_;
-		}
+		Derived() { std::cout << "Derived Default constructor called\n"; }
 };
 
-class MoreDerived: public Derived {
+class Derived2: virtual public Base
+{
 	public:
-		MoreDerived(std::string name): Derived(name), name_(name){}
-		std::string name_;
+		Derived2() { std::cout << "Derived2 Default constructor called\n"; }
+};
+
+class Foo: public Derived, public Derived2
+{
+	public:
+		Foo() {std::cout << "Foo default constructor\n";}
 };
 
 int main()
 {
-	Derived d("logan");
+	Foo f;
 
-	d.attack();
+	std::cout << sizeof(f);
 	return (0);
 }
