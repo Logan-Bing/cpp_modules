@@ -18,10 +18,13 @@ DiamondTrap::DiamondTrap(const std::string& name):
 	std::cout << "DiamondTrap Default Constuctor with name called\n";
 }
 
-DiamondTrap::DiamondTrap(const DiamondTrap& other)
+DiamondTrap::DiamondTrap(const DiamondTrap& other):
+	ClapTrap(other),
+	ScavTrap(other),
+	FragTrap(other),
+	name_(other.name_)
 {
 	std::cout << "DiamondTrap Copy Constuctor with name called\n";
-	*this = other;
 }
 
 DiamondTrap& DiamondTrap::operator=(const DiamondTrap& rhs)

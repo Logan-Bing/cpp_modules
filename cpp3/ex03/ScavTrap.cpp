@@ -19,14 +19,14 @@ ScavTrap::ScavTrap(const std::string& name): ClapTrap(name)
 
 ScavTrap::ScavTrap(const ScavTrap& other): ClapTrap(other)
 {
-	std::cout << "ScavTrap Copy Constuctor called\n";
+	std::cout << "ScavTrap Copy Constuctor called\n\t";
 }
 
 ScavTrap&	ScavTrap::operator=(const ScavTrap& rhs)
 {
 	if (this != &rhs)
 		ClapTrap::operator=(rhs);
-	std::cout << "ScavTrap copy operator called\n";
+	std::cout << "ScavTrap copy operator called\n\t";
 	return *this;
 }
 
