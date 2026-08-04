@@ -3,7 +3,6 @@
 #include "Cat.hpp"
 #include "Brain.hpp"
 
-
 int main()
 {
 	std::cout << "42 TEST\n";
@@ -12,6 +11,28 @@ int main()
 
 	delete j;
 	delete i;
+	std::cout << "--\n";
+	
+	std::cout << "ANIMAL ARRAY TEST\n";
+	Animal *animals[4];
+	std::cout << "\tInit\n\t--\n";
+	std::cout << "\t"; animals[0] = new Dog();
+	std::cout << "\t"; animals[1] = new Dog();
+	std::cout << "\t"; animals[2] = new Cat();
+	std::cout << "\t"; animals[3] = new Cat();
+	std::cout << "\t---------\n";
+
+	std::cout << "\tSound\n\t--\n";
+	for (int i = 0; i < 4; i++)
+	{
+		std::cout << "\t"; animals[i]->makeSound();
+	}
+	std::cout << "\t---------\n";
+
+	std::cout << "\tClear\n\t--\n";
+	for (int i = 0; i < 4; i++)
+		delete animals[i];
+	std::cout << "\t---------\n";
 	std::cout << "--\n";
 
 	std::cout << "DEEP COPY TEST\n";

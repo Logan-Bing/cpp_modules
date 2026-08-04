@@ -10,10 +10,9 @@ Animal::Animal(const std::string& type): type_(type)
 	std::cout << "Animal Type Constuctor called\n";
 }
 
-Animal::Animal(const Animal& other)
+Animal::Animal(const Animal& other): type_(other.type_)
 {
 	std::cout << "Animal Copy Constructor called\n";
-	*this = other;
 }
 
 Animal&	Animal::operator=(const Animal& rhs)

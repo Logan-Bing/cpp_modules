@@ -34,5 +34,6 @@ int main()
 	std::cout << "\t"; const WrongAnimal* c = new WrongCat();
 	std::cout << "\t"; c->makeSound();
 	std::cout << "--\n";
+
 	return 0;
 }
