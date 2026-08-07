@@ -10,11 +10,11 @@
 class Character: public ICharacter {
  private:
 
- typedef struct Garbage
+ typedef struct Stuff
  {
 	AMateria* e;
-	struct Garbage* next;
- } t_garbage;
+	struct Stuff* next;
+ } t_stuff;
 
  public:
   // Constuctor/Destructor
@@ -35,7 +35,7 @@ class Character: public ICharacter {
   
   std::string name_;
   AMateria* slot_[SLOT_SIZE];
-  t_garbage* garbage;
+  t_stuff* stuff_;
 };
 
 #endif

@@ -2,13 +2,12 @@
 #include "Debug.hpp"
 #include "AMateria.hpp"
 
-Character::Character(void): name_(""), slot_(), garbage()
+Character::Character(void): name_(""), slot_(), stuff_()
 {
 	DEBUG_MSG("Character Default Constuctor called\n");
-	
 }
 
-Character::Character(const std::string& name): name_(name), slot_(), garbage()
+Character::Character(const std::string& name): name_(name), slot_(), stuff_()
 {
 	DEBUG_MSG("Character Name Constuctor called\n");
 }
@@ -36,6 +35,16 @@ Character&	Character::operator=(const Character& rhs)
 			if (rhs.slot_[i])
 				slot_[i] = rhs.slot_[i]->clone();
 		}
+
+		
+		t_stuff* current = rhs.stuff_;
+
+		while (current)
+		{
+			stuff_ = new t_stuff();
+			stuff_->e = current->e->clone();
+			current = current->next;
+		}
 	}
 	return *this;
 }
@@ -51,8 +60,8 @@ Character::~Character(void)
 	}
 
 
-	t_garbage* current = garbage;
-	t_garbage* next;
+	t_stuff* current = stuff_;
+	t_stuff* next;
 
 	while (current)
 	{
@@ -104,10 +113,10 @@ void Character::unequip(int idx)
 		return ;
 
 	std::cout << name_ << " unequip the " << slot_[idx]->getType() << std::endl;
-	t_garbage* node = new t_garbage();
+	t_stuff* node = new t_stuff();
 	node->e = slot_[idx];
-	node->next = garbage;
-	garbage = node;
+	node->next = stuff_;
+	stuff_ = node;
 	slot_[idx] = NULL;
 }
  
