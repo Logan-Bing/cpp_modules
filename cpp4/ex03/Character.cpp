@@ -25,11 +25,16 @@ Character&	Character::operator=(const Character& rhs)
 	if (this != &rhs)
 	{
 		name_ = rhs.name_;
-		for (int i = 0; rhs.slot_[i]; i++)
+		for (int i = 0; i < SLOT_SIZE; i++)
 		{
 			if (slot_[i])
+			{
 				delete slot_[i];
-			slot_[i] = rhs.slot_[i]->clone();
+				slot_[i] = NULL;
+			}
+
+			if (rhs.slot_[i])
+				slot_[i] = rhs.slot_[i]->clone();
 		}
 	}
 	return *this;
