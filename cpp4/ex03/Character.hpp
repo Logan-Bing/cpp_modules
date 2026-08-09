@@ -4,6 +4,7 @@
 #include "ICharacter.hpp"
 #include "AMateria.hpp"
 #include <iostream>
+#include <ostream>
 
 #define SLOT_SIZE 4
 
@@ -24,12 +25,27 @@ class Character: public ICharacter {
   Character& operator=(const Character& rhs);
   ~Character(void);
 
+  // Work rules
   int validIndex(int idx) const;
 
+  // Getter
   std::string const & getName() const;
+
+  // Features
   void equip(AMateria* m);
   void unequip(int idx);
   virtual void use(int idx, ICharacter& target);
+
+  // Print
+  void infos();
+
+  // Copy
+  void	copySlot(const Character& other);
+  void	copyStuff(const Character& other);
+
+  // Clear
+  void	clearSlot();
+  void	clearStuff();
 
  private:
   

@@ -12,11 +12,12 @@ Character::Character(const std::string& name): name_(name), slot_(), stuff_()
 	DEBUG_MSG("Character Name Constuctor called\n");
 }
 
-Character::Character(const Character& other): name_(other.name_)
+Character::Character(const Character& other): name_(other.name_), slot_(), stuff_()
 {
 	DEBUG_MSG("Character Copy Constructor called\n");
-	for (int i = 0; i < SLOT_SIZE; i++)
-		slot_[i] = other.slot_[i]->clone();
+	copySlot(other);
+	copyStuff(other);
+
 }
 
 Character&	Character::operator=(const Character& rhs)
@@ -24,27 +25,11 @@ Character&	Character::operator=(const Character& rhs)
 	if (this != &rhs)
 	{
 		name_ = rhs.name_;
-		for (int i = 0; i < SLOT_SIZE; i++)
-		{
-			if (slot_[i])
-			{
-				delete slot_[i];
-				slot_[i] = NULL;
-			}
+		clearSlot();
+		copySlot(rhs);
 
-			if (rhs.slot_[i])
-				slot_[i] = rhs.slot_[i]->clone();
-		}
-
-		
-		t_stuff* current = rhs.stuff_;
-
-		while (current)
-		{
-			stuff_ = new t_stuff();
-			stuff_->e = current->e->clone();
-			current = current->next;
-		}
+		clearStuff();
+		copyStuff(rhs);
 	}
 	return *this;
 }
@@ -53,30 +38,15 @@ Character::~Character(void)
 {
 	DEBUG_MSG("\t" << name_ << " get destroyed" << std::endl);
 
-	for (int i = 0; i < SLOT_SIZE; i++)
-	{
-		if (slot_[i])
-			delete slot_[i];
-	}
-
-
-	t_stuff* current = stuff_;
-	t_stuff* next;
-
-	while (current)
-	{
-		next = current->next;
-		delete current->e;
-		delete current;
-		current = next;
-	}
+	clearSlot();
+	clearStuff();
 }
 
 int Character::validIndex(int idx) const
 {
 	if (idx < 0 || idx >= SLOT_SIZE)
 	{
-		std::cout << "Invalid index" << std::endl;
+		std::cout << "Invalid index: " << idx << std::endl;
 		return 0;
 	}
 
@@ -100,7 +70,7 @@ void Character::equip(AMateria* m)
 	{
 		if (!slot_[i])
 		{
-			slot_[i] = m;
+			slot_[i] = m->clone();
 			std::cout << name_ << " equip a " << m->getType() << std::endl;
 			return;
 		}
@@ -126,4 +96,94 @@ void Character::use(int idx, ICharacter& target)
 		return ;
 
 	slot_[idx]->use(target);
+}
+
+void	Character::infos()
+{
+	std::cout << "\tName = " << name_ << std::endl;
+	std::cout << "\tSlot = {" << std::endl;
+	for (int i = 0; i < SLOT_SIZE; i++)
+	{
+		if (slot_[i])
+		{
+			std::cout << "\t\t[" << i << "] : " << slot_[i]->getType() << " | " << slot_[i];
+			std::cout << std::endl;
+		}
+		else
+		{
+			std::cout << "\t\t[" << i << "] : " << "NULL";
+			std::cout << std::endl;
+		}
+	}
+	std::cout << "\t}" << std::endl;
+	std::cout << std::endl;
+
+	std::cout << "\tStuff = {" << std::endl;
+	t_stuff* current = stuff_;
+	for (int i = 0; i < SLOT_SIZE; i++)
+	{
+		if (current)
+		{
+			int i = 0;
+			std::cout << "\t\t[" << i << "] : " << current->e->getType() << " | " << current->e;
+			std::cout << std::endl;
+			i++;
+			current = current->next;
+		}
+		else
+		{
+			std::cout << "\t\t[" << i << "] : " << "NULL";
+			std::cout << std::endl;
+		}
+	}
+	std::cout << "\t}" << std::endl;
+}
+
+void	Character::copySlot(const Character& other)
+{
+	for (int i = 0; i < SLOT_SIZE; i++)
+	{
+		if (other.slot_[i])
+			slot_[i] = other.slot_[i]->clone();
+	}
+}
+
+void	Character::copyStuff(const Character& other)
+{
+	t_stuff* current = other.stuff_;
+	while (current)
+	{
+		t_stuff* node = new t_stuff();
+		node->e = current->e->clone();
+		node->next = stuff_;
+		stuff_ = node;
+		current = current->next;
+	}
+}
+
+void	Character::clearSlot()
+{
+	for (int i = 0; i < SLOT_SIZE; i++)
+	{
+		if (slot_[i])
+		{
+			delete slot_[i];
+			slot_[i] = NULL;
+		}
+	}
+}
+
+void	Character::clearStuff()
+{
+	t_stuff* current = stuff_;
+	t_stuff* next;
+
+	while (current)
+	{
+		next = current->next;
+		delete current->e;
+		delete current;
+		current = next;
+	}
+	stuff_ = NULL;
 }
