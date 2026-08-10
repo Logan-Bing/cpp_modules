@@ -35,11 +35,6 @@ ScavTrap::~ScavTrap(void)
 	std::cout << "ScavTrap Destructor called\n";
 }
 
-void	ScavTrap::setEnergyPoints(int ep)
-{
-	std::cout << "EnergyPoints set has: " << ep << std::endl;
-	this->energy_points_ = ep;
-}
 
 void	ScavTrap::attack(const std::string& target)
 {
