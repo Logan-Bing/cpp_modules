@@ -20,7 +20,7 @@ int main()
 	std::cout << "\t"; i->makeSound(); //will output the cat sound!
 	std::cout << "\t"; j->makeSound();
 	std::cout << "\t"; meta->makeSound();
-	delete i; delete j;
+	delete meta; delete i; delete j;
 	std::cout << "--\n";
 
 	std::cout << "VPTR / VTABLE\n";
@@ -35,5 +35,6 @@ int main()
 	std::cout << "\t"; c->makeSound();
 	std::cout << "--\n";
 
+	delete c;
 	return 0;
 }
