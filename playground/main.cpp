@@ -5,36 +5,52 @@
 #include <stdexcept>
 #include <string>
 
-
-class Base {
+class Person
+{
 	public:
-		Base() { std::cout << "Base Default constructor called\n"; }
-		
+		void direAge();
+		void direName();
+		void setAge(int n);
+		void setName(std::string name);
+
+	private:
+		int age_;
 		std::string name_;
 };
 
-class Derived: virtual public Base
+void Person::direAge()
 {
-	public:
-		Derived() { std::cout << "Derived Default constructor called\n"; }
+	std::cout << age_ << std::endl;
 };
 
-class Derived2: virtual public Base
+void Person::direName()
 {
-	public:
-		Derived2() { std::cout << "Derived2 Default constructor called\n"; }
+	std::cout << name_ << std::endl;
 };
 
-class Foo: public Derived, public Derived2
+void Person::setAge(int n)
 {
-	public:
-		Foo() {std::cout << "Foo default constructor\n";}
-};
+	age_ = n;
+}
+
+void Person::setName(std::string name)
+{
+	name_ = name;
+}
+
 
 int main()
 {
-	Foo f;
+	Person p1;
+	Person p2;
 
-	std::cout << sizeof(f);
-	return (0);
+	p1.setAge(10);
+	p1.direAge();
+	p2.setAge(20);
+	p2.direAge();
+
+	p1.setName("logan");
+	p1.direName();
+	p1.setName("Hippolyte");
+	p1.direName();
 }
