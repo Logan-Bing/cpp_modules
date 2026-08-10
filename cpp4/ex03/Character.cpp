@@ -17,7 +17,6 @@ Character::Character(const Character& other): name_(other.name_), slot_(), stuff
 	DEBUG_MSG("Character Copy Constructor called\n");
 	copySlot(other);
 	copyStuff(other);
-
 }
 
 Character&	Character::operator=(const Character& rhs)
@@ -70,8 +69,7 @@ void Character::equip(AMateria* m)
 	{
 		if (!slot_[i])
 		{
-			slot_[i] = m->clone();
-			std::cout << name_ << " equip a " << m->getType() << std::endl;
+			slot_[i] = m;
 			return;
 		}
 	}
@@ -82,7 +80,6 @@ void Character::unequip(int idx)
 	if (!validIndex(idx))
 		return ;
 
-	std::cout << name_ << " unequip the " << slot_[idx]->getType() << std::endl;
 	t_stuff* node = new t_stuff();
 	node->e = slot_[idx];
 	node->next = stuff_;

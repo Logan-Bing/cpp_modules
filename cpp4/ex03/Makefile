@@ -1,7 +1,7 @@
 NAME = exec
 CC = c++
 CFLAGS = -g -std=c++98 -Wall -Wextra -Werror
-SRCS = main.cpp AMateria.cpp Cure.cpp Ice.cpp Character.cpp
+SRCS = main.cpp AMateria.cpp Cure.cpp Ice.cpp Character.cpp MateriaSource.cpp
 OBJS = $(SRCS:.cpp=.o)
 HEADERS = $(wildcard *.hpp)
 

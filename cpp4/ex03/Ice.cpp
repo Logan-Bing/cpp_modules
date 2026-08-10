@@ -2,7 +2,7 @@
 #include "Debug.hpp"
 #include "AMateria.hpp"
 
-Ice::Ice(void): AMateria("cure")
+Ice::Ice(void): AMateria("ice")
 {
 	DEBUG_MSG("Ice Default Constuctor called\n");
 }
