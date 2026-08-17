@@ -9,8 +9,17 @@
 
 class Bureaucrat {
  public:
-  class GradeTooHighException: public std::exception {};
-  class GradeTooLowException: public std::exception {};
+
+  class GradeTooHighException: public std::invalid_argument {
+	  public:
+	    GradeTooHighException(const std::string& err);
+  };
+
+  class GradeTooLowException: public std::invalid_argument {
+	  public:
+	    GradeTooLowException(const std::string& err);
+  };
+
   // Constuctor/Destructor
   Bureaucrat(void);
   Bureaucrat(const std::string& name, int grade);

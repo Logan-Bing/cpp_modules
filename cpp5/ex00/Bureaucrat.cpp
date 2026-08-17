@@ -28,16 +28,22 @@ Bureaucrat::~Bureaucrat(void)
 	DEBUG_MSG("Bureaucrat Destructor called\n");
 }
 
+Bureaucrat::GradeTooHighException::GradeTooHighException(const std::string& err): std::invalid_argument(err)
+{}
+
+Bureaucrat::GradeTooLowException::GradeTooLowException(const std::string& err): std::invalid_argument(err)
+{}
+
 int	Bureaucrat::gradeChecker_(int grade)
 {
 	if (grade > 150)
 	{
-		throw Bureaucrat::GradeTooHighException();
+		throw Bureaucrat::GradeTooHighException("The value is too high");
 		return 0;
 	}
 	if (grade < 1)
 	{
-		throw Bureaucrat::GradeTooLowException();
+		throw Bureaucrat::GradeTooLowException("The value is too low");
 		return 0;
 	}
 	return 1;
