@@ -1,7 +1,9 @@
-#include "Bureaucrat.hpp"
-#include "Debug.hpp"
-#include "Form.hpp"
+#include "../includes/Bureaucrat.hpp"
+#include "../includes/Form.hpp"
+#include "../utils/Debug.hpp"
+
 #include <exception>
+#include <iostream>
 
 Bureaucrat::GradeTooHighException::GradeTooHighException(const std::string& err): std::invalid_argument(err)
 {}
@@ -40,12 +42,12 @@ int	Bureaucrat::gradeChecker_(int grade)
 {
 	if (grade > 150)
 	{
-		throw Bureaucrat::GradeTooHighException("The value is too high");
+		throw Bureaucrat::GradeTooHighException(GRADE_RULES);
 		return 0;
 	}
 	if (grade < 1)
 	{
-		throw Bureaucrat::GradeTooLowException("The value is too low");
+		throw Bureaucrat::GradeTooLowException(GRADE_RULES);
 		return 0;
 	}
 	return 1;
@@ -79,12 +81,10 @@ void	Bureaucrat::decrement()
 
 void	Bureaucrat::signForm(Form& f)
 {
-	try 
-	{
+	try {
 		f.beSigned(*this);
 	}
-	catch (std::exception& e)
-	{
+	catch (std::exception& e) {
 		std::cout << e.what() << std::endl;
 	}
 }

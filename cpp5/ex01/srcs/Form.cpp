@@ -1,5 +1,8 @@
-#include "Form.hpp"
-#include "Debug.hpp"
+#include "../includes/Form.hpp"
+#include "../includes/Bureaucrat.hpp"
+#include "../utils/Debug.hpp"
+
+#include <iostream>
 
 Form::GradeTooHighException::GradeTooHighException(const std::string& err): std::invalid_argument(err)
 {}
@@ -10,6 +13,16 @@ Form::GradeTooLowException::GradeTooLowException(const std::string& err): std::i
 Form::Form(void): name_(""), gradeRequiredToSign_(0), gradeRequiredToExecute_(0), is_signed(false)
 {
 	DEBUG_MSG("Form Default Constuctor called\n");
+}
+
+Form::Form(const std::string& name, int gradeRequiredToSign, int gradeRequiredToExecute):
+	name_(name), \
+	gradeRequiredToSign_(gradeRequiredToSign), \
+	gradeRequiredToExecute_(gradeRequiredToExecute), \
+	is_signed(false)
+{
+	gradeChecker_(gradeRequiredToSign_);
+	gradeChecker_(gradeRequiredToExecute_);
 }
 
 Form::Form(const Form& other):
@@ -38,30 +51,33 @@ const std::string& Form::getName() const
 	return name_;
 }
 
-const int Form::getGradeRequiredToSign() const
+int Form::getGradeRequiredToSign() const
 {
 	return gradeRequiredToSign_;
 }
  
-const int Form::getGradeRequiredToExecute() const
+int Form::getGradeRequiredToExecute() const
 {
 	return gradeRequiredToExecute_;
 }
 
-const bool Form::getSignedStatus() const
+bool Form::getSignedStatus() const
 {
 	return is_signed;
 }
 
+void	Form::gradeChecker_(int grade)
+{
+	if (grade > 150) throw Bureaucrat::GradeTooHighException(GRADE_RULES);
+	if (grade < 1) throw Bureaucrat::GradeTooLowException(GRADE_RULES);
+}
+
 void	Form::beSigned(const Bureaucrat& b)
 {
-	if (b.getGrade() < gradeRequiredToSign_)
-	{
-		throw Form::GradeTooLowException(b.getName() + "couldn't sign form because his grade is too low");
-		return ;
-	}
+	if (b.getGrade() > gradeRequiredToSign_)
+		throw Form::GradeTooLowException(b.getName() + " couldn't sign form because his grade is too low");
 
-	std::cout << b.getName() << "signed " << name_ << std::endl;
+	std::cout << b.getName() << " signed " << name_ << std::endl;
 	is_signed = true;
 }
 
@@ -71,8 +87,7 @@ std::ostream& operator<<(std::ostream& os, const Form& rhs)
 
 	os << "name: " << rhs.getName() << std::endl;
 	os << "gradeRequiredToSign: " << rhs.getGradeRequiredToSign() << std::endl;
-	os << "gradeRequiredToExecute: " << rhs.getName() << std::endl;
-	os << "Signed: " << status << std::endl;
-
+	os << "gradeRequiredToExecute: " << rhs.getGradeRequiredToExecute() << std::endl;
+	os << "Signed: " << status;
 	return os;
 }

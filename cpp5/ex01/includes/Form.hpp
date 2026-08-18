@@ -1,9 +1,11 @@
 #ifndef __FORM_HPP__
 #define __FORM_HPP__
 
-#include "Bureaucrat.hpp"
-#include <iostream>
 #include <ostream>
+#include <stdexcept>
+#include <string>
+
+class Bureaucrat;
 
 class Form {
  public:
@@ -18,18 +20,23 @@ class Form {
   };
   // Constuctor/Destructor
   Form(void);
+  Form(const std::string& name, int gradeRequiredToSign, int gradeRequiredToExecute);
   Form(const Form& other);
   Form& operator=(const Form& rhs);
   ~Form(void);
 
   // getters
   const std::string& getName() const;
-  const int getGradeRequiredToSign() const;
-  const int getGradeRequiredToExecute() const;
-  const bool getSignedStatus() const;
+  int getGradeRequiredToSign() const;
+  int getGradeRequiredToExecute() const;
+  bool getSignedStatus() const;
+
+  // checker
+  void	gradeChecker_(int grade);
 
   // featurs
   void	beSigned(const Bureaucrat& b);
+
  private:
   const std::string name_;
   const int gradeRequiredToSign_;

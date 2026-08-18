@@ -1,5 +1,13 @@
-#include "Bureaucrat.hpp"
-#include "Debug.hpp"
+#include "../includes/Bureaucrat.hpp"
+#include "../utils/Debug.hpp"
+
+#include <iostream>
+
+Bureaucrat::GradeTooHighException::GradeTooHighException(const std::string& err): std::invalid_argument(err)
+{}
+
+Bureaucrat::GradeTooLowException::GradeTooLowException(const std::string& err): std::invalid_argument(err)
+{}
 
 Bureaucrat::Bureaucrat(void)
 {
@@ -27,12 +35,6 @@ Bureaucrat::~Bureaucrat(void)
 {
 	DEBUG_MSG("Bureaucrat Destructor called\n");
 }
-
-Bureaucrat::GradeTooHighException::GradeTooHighException(const std::string& err): std::invalid_argument(err)
-{}
-
-Bureaucrat::GradeTooLowException::GradeTooLowException(const std::string& err): std::invalid_argument(err)
-{}
 
 int	Bureaucrat::gradeChecker_(int grade)
 {

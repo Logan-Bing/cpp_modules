@@ -1,13 +1,9 @@
 #ifndef __BUREAUCRAT_HPP__
 #define __BUREAUCRAT_HPP__
 
-#include <exception>
-#include <iostream>
 #include <ostream>
 #include <stdexcept>
-#include "Debug.hpp"
-
-class Form;
+#include <string>
 
 class Bureaucrat {
  public:
@@ -29,15 +25,11 @@ class Bureaucrat {
   Bureaucrat& operator=(const Bureaucrat& rhs);
   ~Bureaucrat(void);
 
-  // getters
   const std::string& getName(void) const;
   int getGrade(void) const;
   int	gradeChecker_(int grade);
-
-  // features
   void	increment();
   void	decrement();
-  void	signForm(Form& f);
 
  private:
   const std::string name_;
@@ -47,3 +39,4 @@ class Bureaucrat {
 std::ostream& operator<<(std::ostream& os, const Bureaucrat& rhs);
 
 #endif
+
