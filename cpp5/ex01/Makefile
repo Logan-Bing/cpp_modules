@@ -26,6 +26,9 @@ $(BUILD_DIR)%.o: %.cpp $(HEADERS)
 debug:
 	$(MAKE) re DEBUG=1
 
+leaks:
+	$(MAKE) && valgrind --leak-check=full ./$(NAME)
+
 clean:
 	rm -rf $(BUILD_DIR)
 
