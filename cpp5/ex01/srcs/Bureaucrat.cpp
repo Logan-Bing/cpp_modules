@@ -11,7 +11,7 @@ Bureaucrat::GradeTooHighException::GradeTooHighException(const std::string& err)
 Bureaucrat::GradeTooLowException::GradeTooLowException(const std::string& err): std::invalid_argument(err)
 {}
 
-Bureaucrat::Bureaucrat(void)
+Bureaucrat::Bureaucrat(void): name_("default"), grade_(150)
 {
 	DEBUG_MSG("Bureaucrat Default Constuctor called\n");
 }
@@ -42,12 +42,12 @@ int	Bureaucrat::gradeChecker_(int grade)
 {
 	if (grade > 150)
 	{
-		throw Bureaucrat::GradeTooHighException(GRADE_RULES);
+		throw Bureaucrat::GradeTooLowException(GRADE_RULES);
 		return 0;
 	}
 	if (grade < 1)
 	{
-		throw Bureaucrat::GradeTooLowException(GRADE_RULES);
+		throw Bureaucrat::GradeTooHighException(GRADE_RULES);
 		return 0;
 	}
 	return 1;
@@ -83,9 +83,10 @@ void	Bureaucrat::signForm(Form& f)
 {
 	try {
 		f.beSigned(*this);
+		std::cout << name_ << " signed " << f.getName() << std::endl;
 	}
 	catch (std::exception& e) {
-		std::cout << e.what() << std::endl;
+		std::cout << name_ + " couldn't sign " << f.getName() << " because " << e.what() << std::endl;
 	}
 }
 

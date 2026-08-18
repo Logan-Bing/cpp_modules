@@ -10,7 +10,7 @@ Form::GradeTooHighException::GradeTooHighException(const std::string& err): std:
 Form::GradeTooLowException::GradeTooLowException(const std::string& err): std::invalid_argument(err)
 {}
 
-Form::Form(void): name_(""), gradeRequiredToSign_(0), gradeRequiredToExecute_(0), is_signed(false)
+Form::Form(void): name_(""), gradeRequiredToSign_(150), gradeRequiredToExecute_(150), is_signed(false)
 {
 	DEBUG_MSG("Form Default Constuctor called\n");
 }
@@ -68,16 +68,15 @@ bool Form::getSignedStatus() const
 
 void	Form::gradeChecker_(int grade)
 {
-	if (grade > 150) throw Bureaucrat::GradeTooHighException(GRADE_RULES);
-	if (grade < 1) throw Bureaucrat::GradeTooLowException(GRADE_RULES);
+	if (grade > 150) throw Form::GradeTooLowException(GRADE_RULES);
+	if (grade < 1) throw Form::GradeTooHighException(GRADE_RULES);
 }
 
 void	Form::beSigned(const Bureaucrat& b)
 {
 	if (b.getGrade() > gradeRequiredToSign_)
-		throw Form::GradeTooLowException(b.getName() + " couldn't sign form because his grade is too low");
+		throw Form::GradeTooLowException("grade too low");
 
-	std::cout << b.getName() << " signed " << name_ << std::endl;
 	is_signed = true;
 }
 

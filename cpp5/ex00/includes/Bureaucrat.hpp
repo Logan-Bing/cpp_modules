@@ -5,6 +5,8 @@
 #include <stdexcept>
 #include <string>
 
+#define GRADE_RULES "ERROR: Grade need to be between 1 and 150"
+
 class Bureaucrat {
  public:
 
