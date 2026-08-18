@@ -1,2 +1,3 @@
-exec
-builds/
+./exec
+./build/
+
