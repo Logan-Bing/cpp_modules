@@ -1,29 +1,41 @@
 #include "../includes/header.hpp"
 #include "../utils/utils.hpp"
-#include <iomanip>
-#include <iostream>
+#include <ctime>
+
+void	printValidTest(int grade, AForm& f, Bureaucrat& b)
+{
+		std::cout << f;
+		std::cout << BG_YELLOW << BLACK << "Bureaucrat grade: " << grade << RESET << std::endl;
+		std::cout << std::endl;
+
+		b.signForm(f);
+		b.executeForm(f);
+
+		std::cout << std::endl;
+}
 
 int main()
 {
+	std::srand(std::time(NULL));
+
 	std::cout << BG_GREEN << BLACK << "VALID TEST" << RESET << std::endl;
 	{
-		int grade = 5;
+		std::cout << std::endl;
+
+		int grade1(5);
 		PresidentialPardonForm f1("Bob");
-		Bureaucrat b1("Jhon", grade);
+		Bureaucrat b1("Jhon", grade1);
+		printValidTest(grade1, f1, b1);
 
-		std::cout << std::endl;
-		std::cout << f1;
-		std::cout << std::endl;
+		int grade2(45);
+		RobotomyRequestForm f2("Foo");
+		Bureaucrat b2("Alice", grade2);
+		printValidTest(grade2, f2, b2);
 
-
-		b1.signForm(f1);
-
-		PresidentialPardonForm f2("Alice");
-		f2 = f1;
-
-		b1.executeForm(f2);
-
-		std::cout << std::endl;
+		int grade3(137);
+		ShrubberyCreationForm f3("Boo");
+		Bureaucrat b3("Toto", grade2);
+		printValidTest(grade3, f3, b3);
 	}
 	// std::cout << BG_GREEN << BLACK << "NOT SIGNED TEST" << RESET << std::endl;
 	// {

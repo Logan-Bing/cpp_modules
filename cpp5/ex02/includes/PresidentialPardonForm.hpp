@@ -13,8 +13,10 @@ class PresidentialPardonForm: public AForm {
   PresidentialPardonForm& operator=(const PresidentialPardonForm& rhs);
   ~PresidentialPardonForm(void);
 
- void	executeAction() const;
  const std::string& getTarget() const;
+
+ protected:
+   void	executeAction() const;
 
  private:
   std::string target_;
