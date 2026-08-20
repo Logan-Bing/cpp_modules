@@ -9,6 +9,11 @@ class Bureaucrat;
 
 class AForm {
  public:
+  class FormNotSignedException: public std::invalid_argument {
+		public:
+		 FormNotSignedException(const std::string& err);
+  };
+
   class GradeTooHighException: public std::invalid_argument {
 	  public:
 	    GradeTooHighException(const std::string& err);
@@ -23,7 +28,7 @@ class AForm {
   AForm(const std::string& name, int gradeRequiredToSign, int gradeRequiredToExecute);
   AForm(const AForm& other);
   AForm& operator=(const AForm& rhs);
-  ~AForm(void);
+  virtual ~AForm(void);
 
   // getters
   const std::string& getName() const;
@@ -31,15 +36,18 @@ class AForm {
   int getGradeRequiredToExecute() const;
   bool getSignedStatus() const;
 
-  // checker
+  // featurs
+  void	beSigned(const Bureaucrat& b);
+  void	execute(const Bureaucrat& executor) const;
+  virtual const std::string& getTarget() const = 0;
+
+ protected:
+  virtual void	executeAction() const = 0;
+
+ private:
   void	gradeChecker_(int grade);
   void	formChecker_(const Bureaucrat& b) const;
 
-  // featurs
-  void	beSigned(const Bureaucrat& b);
-  virtual void	execute(const Bureaucrat& executor) const = 0;
-
- private:
   const std::string name_;
   const int gradeRequiredToSign_;
   const int gradeRequiredToExecute_;

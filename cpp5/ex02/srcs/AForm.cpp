@@ -1,8 +1,18 @@
 #include "../includes/AForm.hpp"
 #include "../includes/Bureaucrat.hpp"
 #include "../utils/Debug.hpp"
+#include "../utils/utils.hpp"
 
+#include <iomanip>
 #include <iostream>
+#include <sstream>
+
+// Largeurs du bloc affiche par operator<<
+#define LABEL_W 25
+#define ROW_W   50
+
+AForm::FormNotSignedException::FormNotSignedException(const std::string& err): std::invalid_argument(err)
+{}
 
 AForm::GradeTooHighException::GradeTooHighException(const std::string& err): std::invalid_argument(err)
 {}
@@ -77,7 +87,13 @@ void	AForm::formChecker_(const Bureaucrat& b) const
 	if (b.getGrade() > gradeRequiredToExecute_)
 		throw AForm::GradeTooLowException(b.getName() + " grade too low");
 	if (!is_signed)
-		throw AForm::GradeTooLowException(name_ + " is not signed");
+		throw AForm::FormNotSignedException(name_ + " is not signed");
+}
+
+void	AForm::execute(const Bureaucrat& executor) const
+{
+	formChecker_(executor);
+	executeAction();
 }
 
 void	AForm::beSigned(const Bureaucrat& b)
@@ -88,13 +104,33 @@ void	AForm::beSigned(const Bureaucrat& b)
 	is_signed = true;
 }
 
+static void	printTitle(std::ostream& os, const std::string& title)
+{
+	os << BG_WHITE << BOLD_BLACK
+	   << std::left << std::setw(ROW_W) << title
+	   << RESET << '\n';
+}
+
+static void	printRow(std::ostream& os, const std::string& label, const std::string& value)
+{
+	std::ostringstream	line;
+
+	line << std::left << std::setw(LABEL_W) << label << value;
+	os << BG_WHITE << BLACK
+	   << std::left << std::setw(ROW_W) << line.str()
+	   << RESET << '\n';
+}
+
 std::ostream& operator<<(std::ostream& os, const AForm& rhs)
 {
-	std::string status = !rhs.getSignedStatus() ? "No" : "Yes";
+	std::ostringstream	sign, exec;
 
-	os << "name: " << rhs.getName() << std::endl;
-	os << "gradeRequiredToSign: " << rhs.getGradeRequiredToSign() << std::endl;
-	os << "gradeRequiredToExecute: " << rhs.getGradeRequiredToExecute() << std::endl;
-	os << "Signed: " << status;
+	sign << rhs.getGradeRequiredToSign();
+	exec << rhs.getGradeRequiredToExecute();
+	printTitle(os, rhs.getName());
+	printRow(os, "Target:", rhs.getTarget());
+	printRow(os, "GradeRequiredToSign:", sign.str());
+	printRow(os, "GradeRequiredToExecute:", exec.str());
+	printRow(os, "Signed:", rhs.getSignedStatus() ? "Yes" : "No");
 	return os;
 }
