@@ -31,6 +31,7 @@ leaks:
 
 clean:
 	rm -rf $(BUILD_DIR)
+	rm -f *_shrubbery
 
 fclean: clean
 	rm -rf $(NAME)
