@@ -5,9 +5,9 @@ INC_DIR = includes/
 UTILS_DIR = utils/
 BUILD_DIR = build/
 CFLAGS = -std=c++98 -Wall -Wextra -Werror
-SRCS = $(addprefix $(SRCS_DIR), main.cpp Bureaucrat.cpp AForm.cpp PresidentialPardonForm.cpp RobotomyRequestForm.cpp ShrubberyCreationForm.cpp)
+SRCS = $(addprefix $(SRCS_DIR), main.cpp Bureaucrat.cpp AForm.cpp PresidentialPardonForm.cpp RobotomyRequestForm.cpp ShrubberyCreationForm.cpp Intern.cpp)
 OBJS = $(addprefix $(BUILD_DIR), $(SRCS:.cpp=.o))
-HEADERS = $(addprefix $(INC_DIR), Bureaucrat.hpp AForm.hpp PresidentialPardonForm.hpp RobotomyRequestForm.hpp ShrubberyCreationForm.hpp header.hpp) $(UTILS_DIR)Debug.hpp
+HEADERS = $(addprefix $(INC_DIR), Bureaucrat.hpp AForm.hpp PresidentialPardonForm.hpp RobotomyRequestForm.hpp ShrubberyCreationForm.hpp Intern.hpp header.hpp) $(UTILS_DIR)Debug.hpp
 
 DEBUG ?= 0
 ifeq ($(DEBUG),1)
@@ -31,7 +31,6 @@ leaks:
 
 clean:
 	rm -rf $(BUILD_DIR)
-	rm -f *_shrubbery
 
 fclean: clean
 	rm -rf $(NAME)

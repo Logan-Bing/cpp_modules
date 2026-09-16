@@ -23,9 +23,9 @@ int main()
 		std::cout << std::endl;
 
 		int grade1(5);
-		PresidentialPardonForm f1("Bob");
+		AForm *f1 = new PresidentialPardonForm("Bob");
 		Bureaucrat b1("Jhon", grade1);
-		printValidTest(grade1, f1, b1);
+		printValidTest(grade1, *f1, b1);
 
 		int grade2(45);
 		RobotomyRequestForm f2("Foo");
@@ -36,32 +36,26 @@ int main()
 		ShrubberyCreationForm f3("Boo");
 		Bureaucrat b3("Toto", grade2);
 		printValidTest(grade3, f3, b3);
+
+		delete f1;
 	}
-	// std::cout << BG_GREEN << BLACK << "NOT SIGNED TEST" << RESET << std::endl;
-	// {
-	// 	std::cout << std::endl;
-	// 	Bureaucrat b1("Jhon", 1);
-	// 	PresidentialPardonForm f1("Bob");
-	// 	b1.executeForm(f1);
-	// 	std::cout << std::endl;
-	// }
-	// std::cout << BG_GREEN << BLACK << "GRADE TOO LOW TEST" << RESET << std::endl;
-	// {
-	// 	std::cout << std::endl;
-	// 	Bureaucrat b1("Jhon", 25);
-	// 	PresidentialPardonForm f1("Bob");
-	// 	b1.signForm(f1);
-	// 	b1.executeForm(f1);
-	// 	std::cout << std::endl;
-	// }
-	// std::cout << BG_GREEN << BLACK << "VIRTUAL TEST" << RESET << std::endl;
-	// {
-	// 	AForm *f1 = new PresidentialPardonForm("Bob");
-	// 	Bureaucrat b1("Jhon", 1);
-	// 	b1.signForm(*f1);
-	// 	b1.executeForm(*f1);
-	// 	delete f1;
-	// }
+	std::cout << BG_GREEN << BLACK << "NOT SIGNED TEST" << RESET << std::endl;
+	{
+		std::cout << std::endl;
+		Bureaucrat b1("Jhon", 1);
+		PresidentialPardonForm f1("Bob");
+		b1.executeForm(f1);
+		std::cout << std::endl;
+	}
+	std::cout << BG_GREEN << BLACK << "GRADE TOO LOW TEST" << RESET << std::endl;
+	{
+		std::cout << std::endl;
+		Bureaucrat b1("Jhon", 25);
+		PresidentialPardonForm f1("Bob");
+		b1.signForm(f1);
+		b1.executeForm(f1);
+		std::cout << std::endl;
+	}
 
 	return 0;
 }
