@@ -3,8 +3,6 @@
 #include "../includes/ShrubberyCreationForm.hpp"
 #include "../includes/RobotomyRequestForm.hpp"
 #include "../includes/PresidentialPardonForm.hpp"
-#include <algorithm>
-#include <cctype>
 
 const Intern::Form Intern::forms[NB_OF_FORM] = {
 	{ SHRUBBERY_TAG,  &ShrubberyCreationForm::create },
@@ -34,29 +32,17 @@ Intern::~Intern(void)
 	DEBUG_MSG("Intern Destructor called\n");
 }
 
-int	charToLower(int ch)
-{
-	return std::tolower(ch);
-}
-
-std::string strToLower(const std::string& s)
-{
-	std::string res;
-	res.resize(s.length());
-	std::transform(s.begin(), s.end(), res.begin(), charToLower);
-
-	return res;
-}
-
 AForm* Intern::makeForm(const std::string& form, const std::string& target)
 {
-	std::string form_lower(strToLower(form));
-
 	for (int i = 0; i < NB_OF_FORM; i++)
 	{
-		if (form_lower == forms[i].name)
+		if (form == forms[i].name)
+		{
+			std::cout << "Intern creates " << form<< std::endl;
 			return forms[i].constructor(target);
+		}
 	}
 
+	std::cout << "Error: No form named " << form << std::endl;
 	return NULL;
 }
