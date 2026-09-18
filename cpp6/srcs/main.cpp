@@ -1,16 +1,14 @@
 #include "../includes/header.hpp"
 #include <iostream>
 
-int main()
+int main(int argc, char *argv[])
 {
-	// if (argc == 2)
-	// {
-	// 	ScalarConverter::convert(std::string(argv[1]));
-	// }
-	
-	char ch = 'a';
-	double d = static_cast<double>(ch);
+	(void)argc;
+	(void)argv;
+	if (argc == 2)
+	{
+		ScalarConverter::convert(argv[1]);
+	}
 
-	std::cout << d << std::endl;
 	return 0;
 }
