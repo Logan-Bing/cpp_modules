@@ -78,6 +78,9 @@ bool ScalarConverter::handlePseudoLitteral(const std::string& input)
 	return false;
 }
 
+bool	ScalarConverter::handleChar(const std::string& input)
+{
+}
 
 void	ScalarConverter::convert(const std::string &input)
 {

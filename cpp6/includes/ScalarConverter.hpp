@@ -25,6 +25,7 @@ class ScalarConverter {
 
   // helpers
   static bool handlePseudoLitteral(const std::string& input);
+  static bool	handleChar(const std::string& input);
 
   /*
    * @brief Print template result + types
