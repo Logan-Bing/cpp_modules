@@ -1,5 +1,8 @@
 #include "../includes/ScalarConverter.hpp"
 #include "../utils/Debug.hpp"
+#include <cctype>
+#include <cstddef>
+#include <string>
 
 const ScalarConverter::LiteralMapping ScalarConverter::pseudo_literals[3] =
 {
@@ -40,6 +43,52 @@ ScalarConverter::~ScalarConverter(void)
 // - Convertir le input en son type reel exemple: 1 -> int
 // - Caster dans les autres types
 
+bool	ScalarConverter::isValidChar(const std::string& ch)
+{
+	return !(ch == IMPOSSIBLE_TAG || ch == NON_DISPLAYABLE_TAG);
+}
+
+void	ScalarConverter::printChar(const std::string& ch)
+{
+	std::cout << "char: ";
+	if (isValidChar(ch))
+		std::cout << "'" << ch << "'" << std::endl;
+	else
+		std::cout << ch << std::endl;
+}
+
+bool ScalarConverter::isChar(const std::string& input)
+{
+	return (input.length() == 3 && input[0] == '\'' && input[2] == '\'');
+}
+
+bool ScalarConverter::isInt(const std::string& input)
+{
+	size_t i = 0;
+	if (input[0] == '-' || input[0] == '+')
+		i++;
+	for (; i < input.length(); i++)
+	{
+		if (!std::isdigit(input[i]))
+			return false;
+	}
+	return true;
+}
+
+bool ScalarConverter::isFloat(const std::string& input)
+{
+	size_t i = 0;
+	if (input[0] == '-' || input[0] == '+')
+		i++;
+}
+
+bool ScalarConverter::isDouble(const std::string& input)
+{
+	size_t i = 0;
+	if (input[0] == '-' || input[0] == '+')
+		i++;
+}
+
 void	ScalarConverter::printAllTypes
 (
 	const std::string& ch,
@@ -48,8 +97,8 @@ void	ScalarConverter::printAllTypes
 	const std::string& d
 )
 {
+	printChar(ch);
 	std::cout << 
-		"char: " << ch << '\n' <<
 		"int: " << i << '\n' <<
 		"float: " << f << '\n' <<
 		"double: " << d << std::endl;
@@ -78,12 +127,14 @@ bool ScalarConverter::handlePseudoLitteral(const std::string& input)
 	return false;
 }
 
-bool	ScalarConverter::handleChar(const std::string& input)
-{
-}
 
 void	ScalarConverter::convert(const std::string &input)
 {
 	if (handlePseudoLitteral(input))
 		return ;
+
+	if (isChar(input))
+		std::cout << "ok" << std::endl;
+	if (isInt(input))
+		std::cout << "isInt" << std::endl;
 }

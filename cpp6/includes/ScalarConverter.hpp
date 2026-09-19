@@ -11,6 +11,9 @@
 #define FLOAT_INF_P_REPR "+inff"
 #define FLOAT_INF_N_REPR "-inff"
 
+#define IMPOSSIBLE_TAG "impossible"
+#define NON_DISPLAYABLE_TAG "Non displayable"
+
 class ScalarConverter {
  public:
   static void convert(const std::string& input);
@@ -25,7 +28,12 @@ class ScalarConverter {
 
   // helpers
   static bool handlePseudoLitteral(const std::string& input);
-  static bool	handleChar(const std::string& input);
+  static bool	isValidChar(const std::string& ch);
+  static void	printChar(const std::string& ch);
+  static bool	isChar(const std::string& input);
+  static bool	isInt(const std::string& input);
+  static bool	isFloat(const std::string& input);
+  static bool	isDouble(const std::string& input)
 
   /*
    * @brief Print template result + types
