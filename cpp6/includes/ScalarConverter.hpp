@@ -33,7 +33,7 @@ class ScalarConverter {
   static bool	isChar(const std::string& input);
   static bool	isInt(const std::string& input);
   static bool	isFloat(const std::string& input);
-  static bool	isDouble(const std::string& input)
+  static bool	isDouble(const std::string& input);
 
   /*
    * @brief Print template result + types

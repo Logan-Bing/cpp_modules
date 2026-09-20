@@ -26,12 +26,15 @@ $(BUILD_DIR)%.o: %.cpp $(HEADERS)
 debug:
 	$(MAKE) re DEBUG=1
 
+test: $(SRCS_DIR)test.cpp $(SRCS_DIR)ScalarConverter.cpp $(HEADERS)
+	$(CC) $(CFLAGS) $(SRCS_DIR)test.cpp $(SRCS_DIR)ScalarConverter.cpp -o test_bin
+
 clean:
 	rm -rf $(BUILD_DIR)
 
 fclean: clean
-	rm -rf $(NAME)
+	rm -rf $(NAME) test_bin
 
 re: fclean all
 
-.PHONY: re clean fclean all debug
+.PHONY: re clean fclean all debug test

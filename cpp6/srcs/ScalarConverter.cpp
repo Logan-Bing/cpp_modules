@@ -65,28 +65,54 @@ bool ScalarConverter::isChar(const std::string& input)
 bool ScalarConverter::isInt(const std::string& input)
 {
 	size_t i = 0;
+
 	if (input[0] == '-' || input[0] == '+')
 		i++;
+
+	if (!std::isdigit(input[i]))
+		return false;
+
 	for (; i < input.length(); i++)
 	{
 		if (!std::isdigit(input[i]))
 			return false;
 	}
+
 	return true;
 }
 
 bool ScalarConverter::isFloat(const std::string& input)
 {
 	size_t i = 0;
+	size_t start = 0;
+
 	if (input[0] == '-' || input[0] == '+')
 		i++;
+
+	start = i;
+	for (; i < input.length() && std::isdigit(input[i]); i++);
+
+	if (start == i || input[i] != '.')
+		return false;
+	i++;
+
+	start = i;
+	for (; i < input.length() && std::isdigit(input[i]); i++);
+
+	if (start == i || input[i] != 'f')
+		return false;
+	i++;
+
+	return (i == input.length());
 }
 
 bool ScalarConverter::isDouble(const std::string& input)
 {
-	size_t i = 0;
-	if (input[0] == '-' || input[0] == '+')
-		i++;
+	(void)input;
+	// size_t i = 0;
+	// if (input[0] == '-' || input[0] == '+')
+	// 	i++;
+	return true;
 }
 
 void	ScalarConverter::printAllTypes
