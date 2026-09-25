@@ -3,12 +3,12 @@
 
 int main(int argc, char *argv[])
 {
-	(void)argc;
-	(void)argv;
 	if (argc == 2)
 	{
 		ScalarConverter::convert(argv[1]);
+		return 0;
 	}
 
-	return 0;
+	std::cout << "Need one argument" << std::endl;
+	return 1;
 }

@@ -23,18 +23,16 @@ class ScalarConverter {
 	  std::string double_repr;
 	  std::string float_repr;
   };
-
   static const LiteralMapping pseudo_literals[3];
 
-  // helpers
-  static bool handlePseudoLitteral(const std::string& input);
-  static bool	isValidChar(const std::string& ch);
-  static void	printChar(const std::string& ch);
-  static bool	isChar(const std::string& input);
-  static bool	isInt(const std::string& input);
-  static bool	isFloat(const std::string& input);
-  static bool	isDouble(const std::string& input);
+  // Constuctor/Destructor
+  ScalarConverter(void);
+  ScalarConverter(const ScalarConverter& other);
+  ScalarConverter& operator=(const ScalarConverter& rhs);
+  ~ScalarConverter(void);
 
+  // functions
+  static bool	handlePseudoLitteral(const std::string& input);
   /*
    * @brief Print template result + types
    */ 
@@ -45,12 +43,16 @@ class ScalarConverter {
 		  const std::string& f,
 		  const std::string& d
 	);
-  // Constuctor/Destructor
-  ScalarConverter(void);
-  ScalarConverter(const ScalarConverter& other);
-  ScalarConverter& operator=(const ScalarConverter& rhs);
-  ~ScalarConverter(void);
 
+  static size_t	parseMantissa(const std::string& input);
+  static bool	isChar(const std::string& input);
+  static bool	isInt(const std::string& input);
+  static bool	isFloat(const std::string& input);
+  static bool	isDouble(const std::string& input);
+  static void	printChar(double value);
+  static void	printInt(double value);
+  static void	printFloat(double value);
+  static void	printDouble(double value);
 
 };
 

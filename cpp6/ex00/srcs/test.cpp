@@ -117,11 +117,60 @@ static void testIsFloat(void)
 	check("isFloat", ScalarConverter::isFloat("+inff"), false, "+inff");
 }
 
+static void testIsDouble(void)
+{
+	std::cout << "\n=== isDouble ===" << std::endl;
+	// vrais
+	check("isDouble", ScalarConverter::isDouble("0.0"), true, "0.0");
+	check("isDouble", ScalarConverter::isDouble("4.2"), true, "4.2");
+	check("isDouble", ScalarConverter::isDouble("-4.2"), true, "-4.2");
+	check("isDouble", ScalarConverter::isDouble("+4.2"), true, "+4.2");
+	check("isDouble", ScalarConverter::isDouble("-0.0"), true, "-0.0");
+	check("isDouble", ScalarConverter::isDouble("0.1"), true, "0.1");
+	check("isDouble", ScalarConverter::isDouble("123.456"), true, "123.456");
+	check("isDouble", ScalarConverter::isDouble("42.0"), true, "42.0");
+	// vrai : forme valide, la valeur deborde a l'execution
+	check("isDouble", ScalarConverter::isDouble("99999999999999999999.0"), true,
+		"99999999999999999999.0");
+	// faux : vide ou pas de chiffre
+	check("isDouble", ScalarConverter::isDouble(""), false, "");
+	check("isDouble", ScalarConverter::isDouble(" "), false, " ");
+	check("isDouble", ScalarConverter::isDouble("."), false, ".");
+	check("isDouble", ScalarConverter::isDouble("-"), false, "-");
+	check("isDouble", ScalarConverter::isDouble("+"), false, "+");
+	check("isDouble", ScalarConverter::isDouble("-."), false, "-.");
+	check("isDouble", ScalarConverter::isDouble("abc"), false, "abc");
+	// faux : point manquant ou mal place
+	check("isDouble", ScalarConverter::isDouble("42"), false, "42");
+	check("isDouble", ScalarConverter::isDouble("42."), false, "42.");
+	check("isDouble", ScalarConverter::isDouble(".42"), false, ".42");
+	check("isDouble", ScalarConverter::isDouble("1.2.3"), false, "1.2.3");
+	check("isDouble", ScalarConverter::isDouble("-.42"), false, "-.42");
+	// faux : c'est un float, pas un double
+	check("isDouble", ScalarConverter::isDouble("4.2f"), false, "4.2f");
+	check("isDouble", ScalarConverter::isDouble("0.0f"), false, "0.0f");
+	check("isDouble", ScalarConverter::isDouble("-4.2f"), false, "-4.2f");
+	// faux : caracteres en trop
+	check("isDouble", ScalarConverter::isDouble("4.2abc"), false, "4.2abc");
+	check("isDouble", ScalarConverter::isDouble("4.2 "), false, "4.2 ");
+	check("isDouble", ScalarConverter::isDouble(" 4.2"), false, " 4.2");
+	check("isDouble", ScalarConverter::isDouble("--4.2"), false, "--4.2");
+	check("isDouble", ScalarConverter::isDouble("4.2.f"), false, "4.2.f");
+	// faux : notations hors sujet et autres types
+	check("isDouble", ScalarConverter::isDouble("1e10"), false, "1e10");
+	check("isDouble", ScalarConverter::isDouble("4.2e3"), false, "4.2e3");
+	check("isDouble", ScalarConverter::isDouble("0x2A"), false, "0x2A");
+	check("isDouble", ScalarConverter::isDouble("'a'"), false, "'a'");
+	check("isDouble", ScalarConverter::isDouble("nan"), false, "nan");
+	check("isDouble", ScalarConverter::isDouble("+inf"), false, "+inf");
+}
+
 int main(void)
 {
 	testIsChar();
 	testIsInt();
 	testIsFloat();
+	testIsDouble();
 
 	std::cout << "\n---------------------------------" << std::endl;
 	std::cout << g_total - g_failed << " / " << g_total << " tests passes";

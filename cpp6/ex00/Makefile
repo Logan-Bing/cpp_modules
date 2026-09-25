@@ -1,4 +1,4 @@
-NAME = exec
+NAME = convert
 CC = c++
 SRCS_DIR = srcs/
 INC_DIR = includes/
