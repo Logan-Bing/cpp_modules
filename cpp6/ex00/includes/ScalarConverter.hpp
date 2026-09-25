@@ -14,6 +14,10 @@
 #define IMPOSSIBLE_TAG "impossible"
 #define NON_DISPLAYABLE_TAG "Non displayable"
 
+// Au dela, un entier n'est plus representable exactement : on laisse le
+// format par defaut plutot que d'aligner des chiffres faux.
+#define PRINT_FIXED_LIMIT 1e16
+
 class ScalarConverter {
  public:
   static void convert(const std::string& input);

@@ -5,9 +5,9 @@ INC_DIR = includes/
 UTILS_DIR = utils/
 BUILD_DIR = build/
 CFLAGS = -std=c++98 -Wall -Wextra -Werror
-SRCS = $(addprefix $(SRCS_DIR), main.cpp ScalarConverter.cpp)
+SRCS = $(addprefix $(SRCS_DIR), main.cpp Serializer.cpp)
 OBJS = $(addprefix $(BUILD_DIR), $(SRCS:.cpp=.o))
-HEADERS = $(addprefix $(INC_DIR), header.hpp ScalarConverter.hpp) $(UTILS_DIR)Debug.hpp
+HEADERS = $(addprefix $(INC_DIR), header.hpp Serializer.hpp) $(UTILS_DIR)Debug.hpp
 
 DEBUG ?= 0
 ifeq ($(DEBUG),1)

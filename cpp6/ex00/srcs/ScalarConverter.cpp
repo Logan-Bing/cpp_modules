@@ -5,7 +5,16 @@
 #include <cmath>
 #include <cstddef>
 #include <cstdlib>
+#include <iomanip>
+#include <limits>
 #include <string>
+
+// inf n'est pas detectable via std::isinf en C++98 : on compare aux bornes.
+static bool	isInfinite(double value)
+{
+	return (value > std::numeric_limits<double>::max()
+		|| value < -std::numeric_limits<double>::max());
+}
 
 const ScalarConverter::LiteralMapping ScalarConverter::pseudo_literals[3] =
 {
@@ -104,7 +113,10 @@ size_t	ScalarConverter::parseMantissa(const std::string& input)
 
 bool ScalarConverter::isChar(const std::string& input)
 {
-	return (input.length() == 3 && input[0] == '\'' && input[2] == '\'');
+	if (input.length() == 3 && input[0] == '\'' && input[2] == '\'')
+		return true;
+	// ./convert 'a' : le shell retire les quotes, on recoit "a" tout court.
+	return (input.length() == 1 && !std::isdigit(input[0]));
 }
 
 bool ScalarConverter::isInt(const std::string& input)
@@ -171,19 +183,42 @@ void	ScalarConverter::printInt(double value)
 
 void	ScalarConverter::printFloat(double value)
 {
-	float f = static_cast<float>(value);
-	std::cout << "float: " << f;
-	if (f == std::floor(value) && std::fabs(f) < 1e6)
-		std::cout << ".0";
+	float			f = static_cast<float>(value);
+	std::streamsize	prec = std::cout.precision();
+
+	std::cout << "float: ";
+	if (isInfinite(f))
+	{
+		std::cout << (f < 0 ? FLOAT_INF_N_REPR : FLOAT_INF_P_REPR) << std::endl;
+		return;
+	}
+	if (f == std::floor(f) && std::fabs(f) < PRINT_FIXED_LIMIT)
+		std::cout << std::fixed << std::setprecision(1) << f;
+	else
+		std::cout << std::setprecision(std::numeric_limits<float>::digits10) << f;
 	std::cout << "f" << std::endl;
+	// fixed/precision sont remanents sur le flux : printDouble en heriterait.
+	std::cout.unsetf(std::ios::floatfield);
+	std::cout.precision(prec);
 }
 
 void	ScalarConverter::printDouble(double value)
 {
-	std::cout << "double: " << value;
-	if (value == std::floor(value) && std::fabs(value) < 1e6)
-		std::cout << ".0";
+	std::streamsize	prec = std::cout.precision();
+
+	std::cout << "double: ";
+	if (isInfinite(value))
+	{
+		std::cout << (value < 0 ? DOUBLE_INF_N_REPR : DOUBLE_INF_P_REPR) << std::endl;
+		return;
+	}
+	if (value == std::floor(value) && std::fabs(value) < PRINT_FIXED_LIMIT)
+		std::cout << std::fixed << std::setprecision(1) << value;
+	else
+		std::cout << std::setprecision(std::numeric_limits<double>::digits10) << value;
 	std::cout << std::endl;
+	std::cout.unsetf(std::ios::floatfield);
+	std::cout.precision(prec);
 }
 
 
@@ -196,7 +231,7 @@ void	ScalarConverter::convert(const std::string &input)
 
 	if (isChar(input))
 	{
-		value = static_cast<double>(input[1]);
+		value = static_cast<double>(input.length() == 1 ? input[0] : input[1]);
 	}
 	else if (isInt(input) || isFloat(input) || isDouble(input))
 	{

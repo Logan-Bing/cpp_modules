@@ -35,7 +35,11 @@ static void testIsChar(void)
 	check("isChar", ScalarConverter::isChar("'''"), true, "'''");
 	// faux
 	check("isChar", ScalarConverter::isChar(""), false, "");
-	check("isChar", ScalarConverter::isChar("a"), false, "a");
+	// vrais : forme nue, le shell retire les quotes de ./convert 'a'
+	check("isChar", ScalarConverter::isChar("a"), true, "a");
+	check("isChar", ScalarConverter::isChar("Z"), true, "Z");
+	check("isChar", ScalarConverter::isChar("*"), true, "*");
+	check("isChar", ScalarConverter::isChar("5"), false, "5");
 	check("isChar", ScalarConverter::isChar("''"), false, "''");
 	check("isChar", ScalarConverter::isChar("'ab'"), false, "'ab'");
 	check("isChar", ScalarConverter::isChar("'a"), false, "'a");
