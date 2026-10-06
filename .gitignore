@@ -4,3 +4,5 @@ exec
 *.out
 *.a
 .DS_Store
+convert
+test_bin
