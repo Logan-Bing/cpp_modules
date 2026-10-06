@@ -2,11 +2,13 @@
 
 int main()
 {
-	Base *base = new A();
+	std::srand(std::time(NULL));
 
-	B* b = dynamic_cast<B*>(base);
+	Base base;
+	Base *obj = base.generate();
 
-	std::cout << b << std::endl;
+	obj->identify(obj);
+	(*obj).identify(obj);
 
 	return 0;
 }
