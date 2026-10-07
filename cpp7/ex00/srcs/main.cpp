@@ -1,5 +1,4 @@
 #include "../includes/header.hpp"
-
 #include <iostream>
 
 int main( void )
