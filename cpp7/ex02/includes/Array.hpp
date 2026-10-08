@@ -13,6 +13,8 @@ class Array
 
 		const T& operator[](unsigned int index) const;
 		T& operator[](unsigned int index);
+
+		unsigned int size();
 	
 	private:
 		T* elements_;

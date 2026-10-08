@@ -28,6 +28,12 @@ Array<T>& Array<T>::operator=(const Array& rhs)
 }
 
 template <typename T>
+Array<T>::~Array()
+{
+	delete[] elements_;
+}
+
+template <typename T>
 const T& Array<T>::operator[](unsigned int index) const
 {
 	if (index > length_)
@@ -44,8 +50,7 @@ T& Array<T>::operator[](unsigned int index)
 }
 
 template <typename T>
-Array<T>::~Array()
+unsigned int Array<T>::size()
 {
-	delete[] elements_;
+	return length_;
 }
-
