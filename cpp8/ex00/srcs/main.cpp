@@ -4,7 +4,6 @@
 #include <vector>
 #include <list>
 
-
 int main()
 {
 	typedef std::vector<int>	ints_v;
