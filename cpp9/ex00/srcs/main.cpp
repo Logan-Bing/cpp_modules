@@ -1,8 +1,11 @@
 #include "../includes/header.hpp"
 
-#include <iostream>
-
 int main()
 {
+	BitcoinExchange b("data.csv");
+
+	b.ParseCsv();
+	b.PrintData();
+
 	return 0;
 }

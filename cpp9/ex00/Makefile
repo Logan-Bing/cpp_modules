@@ -1,11 +1,11 @@
-NAME = exec
+NAME = btc
 CC = c++
 SRCS_DIR = srcs/
 INC_DIR = includes/
 UTILS_DIR = utils/
 BUILD_DIR = build/
-CFLAGS = -std=c++98 -Wall -Wextra -Werror
-SRCS = $(addprefix $(SRCS_DIR), main.cpp)
+CFLAGS = -std=c++98 -Wall -Wextra -Werror -DPROJECT_DIR=\"$(CURDIR)\"
+SRCS = $(addprefix $(SRCS_DIR), main.cpp BitcoinExchange.cpp)
 OBJS = $(addprefix $(BUILD_DIR), $(SRCS:.cpp=.o))
 HEADERS = $(addprefix $(INC_DIR), header.hpp) $(UTILS_DIR)Debug.hpp
 
