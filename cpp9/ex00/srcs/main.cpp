@@ -1,11 +1,17 @@
 #include "../includes/header.hpp"
 
-int main()
+#define DATA_FILENAME "data.csv"
+
+int main(int argc, char *argv[])
 {
-	BitcoinExchange b("data.csv");
+	if (argc == 2)
+	{
+		BitcoinExchange b(DATA_FILENAME, argv[1]);
+		b.handleDataFile();
+		b.handleInputFile();
+		return 0;
+	}
 
-	b.ParseCsv();
-	b.PrintData();
-
-	return 0;
+	std::cout << "Error: could not open file." << std::endl;
+	return 1;
 }
