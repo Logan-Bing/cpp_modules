@@ -115,7 +115,7 @@ bool ScalarConverter::isChar(const std::string& input)
 {
 	if (input.length() == 3 && input[0] == '\'' && input[2] == '\'')
 		return true;
-	// ./convert 'a' : le shell retire les quotes, on recoit "a" tout court.
+
 	return (input.length() == 1 && !std::isdigit(input[0]));
 }
 
@@ -152,14 +152,15 @@ bool ScalarConverter::isDouble(const std::string& input)
 
 void	ScalarConverter::printChar(double value)
 {
-	char ch = static_cast<char>(value);
-
 	std::cout << "char: ";
 	if (value < 0 || value > 127)
 	{
 		std::cout << IMPOSSIBLE_TAG << std::endl;
 		return;
 	}
+
+	char ch = static_cast<char>(value);
+
 	if (!std::isprint(ch))
 	{
 		std::cout << NON_DISPLAYABLE_TAG << std::endl;
@@ -183,21 +184,21 @@ void	ScalarConverter::printInt(double value)
 
 void	ScalarConverter::printFloat(double value)
 {
+	std::cout << "float: ";
+	if (value > std::numeric_limits<float>::max() || value < -std::numeric_limits<float>::max())
+	{
+		std::cout << IMPOSSIBLE_TAG << std::endl;
+		return;
+	}
+
 	float			f = static_cast<float>(value);
 	std::streamsize	prec = std::cout.precision();
 
-	std::cout << "float: ";
-	if (isInfinite(f))
-	{
-		std::cout << (f < 0 ? FLOAT_INF_N_REPR : FLOAT_INF_P_REPR) << std::endl;
-		return;
-	}
 	if (f == std::floor(f) && std::fabs(f) < PRINT_FIXED_LIMIT)
 		std::cout << std::fixed << std::setprecision(1) << f;
 	else
 		std::cout << std::setprecision(std::numeric_limits<float>::digits10) << f;
 	std::cout << "f" << std::endl;
-	// fixed/precision sont remanents sur le flux : printDouble en heriterait.
 	std::cout.unsetf(std::ios::floatfield);
 	std::cout.precision(prec);
 }
@@ -209,7 +210,7 @@ void	ScalarConverter::printDouble(double value)
 	std::cout << "double: ";
 	if (isInfinite(value))
 	{
-		std::cout << (value < 0 ? DOUBLE_INF_N_REPR : DOUBLE_INF_P_REPR) << std::endl;
+		std::cout << IMPOSSIBLE_TAG << std::endl;
 		return;
 	}
 	if (value == std::floor(value) && std::fabs(value) < PRINT_FIXED_LIMIT)
@@ -220,7 +221,6 @@ void	ScalarConverter::printDouble(double value)
 	std::cout.unsetf(std::ios::floatfield);
 	std::cout.precision(prec);
 }
-
 
 void	ScalarConverter::convert(const std::string &input)
 {
@@ -242,7 +242,11 @@ void	ScalarConverter::convert(const std::string &input)
 		printAllTypes(IMPOSSIBLE_TAG, IMPOSSIBLE_TAG, IMPOSSIBLE_TAG, IMPOSSIBLE_TAG);
 		return;
 	}
-	
+
+	if (value < std::numeric_limits<float>::max() && value > -std::numeric_limits<float>::max())
+	{
+		value = static_cast<double>(std::strtof(input.c_str(), NULL));
+	}
 
 	printChar(value);
 	printInt(value);
