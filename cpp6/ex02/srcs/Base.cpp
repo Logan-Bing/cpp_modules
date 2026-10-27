@@ -4,6 +4,8 @@
 #include "../includes/C.hpp"
 #include "../utils/Debug.hpp"
 #include <exception>
+#include <cstdlib>
+#include <ctime>
 
 Base::~Base(void)
 {

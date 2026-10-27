@@ -8,7 +8,8 @@ int main()
 	Base *obj = base.generate();
 
 	obj->identify(obj);
-	(*obj).identify(obj);
+	obj->identify(*obj);
 
+	delete obj;
 	return 0;
 }
