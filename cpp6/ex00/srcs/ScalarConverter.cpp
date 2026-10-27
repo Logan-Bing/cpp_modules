@@ -243,11 +243,6 @@ void	ScalarConverter::convert(const std::string &input)
 		return;
 	}
 
-	if (value < std::numeric_limits<float>::max() && value > -std::numeric_limits<float>::max())
-	{
-		value = static_cast<double>(std::strtof(input.c_str(), NULL));
-	}
-
 	printChar(value);
 	printInt(value);
 	printFloat(value);
