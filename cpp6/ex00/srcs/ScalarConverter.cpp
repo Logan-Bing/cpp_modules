@@ -233,7 +233,11 @@ void	ScalarConverter::convert(const std::string &input)
 	{
 		value = static_cast<double>(input.length() == 1 ? input[0] : input[1]);
 	}
-	else if (isInt(input) || isFloat(input) || isDouble(input))
+	else if (isFloat(input))
+	{
+		value = std::strtof(input.c_str(), NULL);
+	}
+	else if (isInt(input) || isDouble(input))
 	{
 		value = std::strtod(input.c_str(), NULL);
 	}
