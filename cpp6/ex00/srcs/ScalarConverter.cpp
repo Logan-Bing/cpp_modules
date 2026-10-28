@@ -162,7 +162,7 @@ bool ScalarConverter::isDouble(const std::string& input)
 void	ScalarConverter::printChar(double value)
 {
 	std::cout << "char: ";
-	if (!isValidRangeT<char>(value))
+	if (value < 0 || value > 127)
 	{
 		std::cout << IMPOSSIBLE_TAG << std::endl;
 		return;
@@ -242,7 +242,7 @@ void	ScalarConverter::convert(const std::string &input)
 	else if (isInt(input))
 	{
 		int i = StrtoT<int>(input);
-		printChar(static_cast<char>(i));
+		printChar(i);
 		printInt(i);
 		printFloat(static_cast<float>(i));
 		printDouble(static_cast<double>(i));
@@ -250,7 +250,7 @@ void	ScalarConverter::convert(const std::string &input)
 	else if (isFloat(input))
 	{
 		float f = StrtoT<float>(input);
-		printChar(static_cast<char>(f));
+		printChar(f);
 		printInt(static_cast<int>(f));
 		printFloat(f);
 		printDouble(static_cast<double>(f));
@@ -258,7 +258,7 @@ void	ScalarConverter::convert(const std::string &input)
 	else if (isDouble(input))
 	{
 		double d = StrtoT<double>(input);
-		printChar(static_cast<char>(d));
+		printChar(d);
 		printInt(static_cast<int>(d));
 		printFloat(static_cast<float>(d));
 		printDouble(d);
