@@ -1,8 +1,0 @@
-build/
-exec
-*.o
-*.out
-*.a
-.DS_Store
-convert
-test_bin
