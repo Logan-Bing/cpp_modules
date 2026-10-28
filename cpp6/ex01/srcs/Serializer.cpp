@@ -1,6 +1,6 @@
 #include "../includes/Serializer.hpp"
 #include "../utils/Debug.hpp"
-#include <cstdint>
+#include <stdint.h>
 
 Serializer::Serializer(void)
 {

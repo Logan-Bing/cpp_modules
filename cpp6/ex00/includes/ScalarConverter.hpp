@@ -2,6 +2,8 @@
 #define __SCALARCONVERTER_HPP__
 
 #include <iostream>
+#include <limits>
+#include <sstream>
 
 #define DOUBLE_NAN_REPR "nan"
 #define DOUBLE_INF_P_REPR "+inf"
@@ -47,6 +49,21 @@ class ScalarConverter {
 		  const std::string& f,
 		  const std::string& d
 	);
+
+  template <typename T>
+  static T StrtoT(const std::string& ss)
+  {
+	T value;
+	std::stringstream(ss) >> value;
+
+	return value;
+  }
+
+  template <typename T>
+  static bool isValidRangeT(double value)
+  {
+		return value < std::numeric_limits<T>::max() && value > std::numeric_limits<T>::min();
+  }
 
   static size_t	parseMantissa(const std::string& input);
   static bool	isChar(const std::string& input);

@@ -1,4 +1,4 @@
-NAME = convert
+NAME = prog
 CC = c++
 SRCS_DIR = srcs/
 INC_DIR = includes/

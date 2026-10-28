@@ -7,14 +7,8 @@
 #include <cstdlib>
 #include <iomanip>
 #include <limits>
+#include <sstream>
 #include <string>
-
-// inf n'est pas detectable via std::isinf en C++98 : on compare aux bornes.
-static bool	isInfinite(double value)
-{
-	return (value > std::numeric_limits<double>::max()
-		|| value < -std::numeric_limits<double>::max());
-}
 
 const ScalarConverter::LiteralMapping ScalarConverter::pseudo_literals[3] =
 {
@@ -121,6 +115,11 @@ bool ScalarConverter::isChar(const std::string& input)
 
 bool ScalarConverter::isInt(const std::string& input)
 {
+	double value = StrtoT<double>(input);
+
+	if (!isValidRangeT<int>(value))
+		return false;
+
 	size_t i = 0;
 
 	if (input[0] == '-' || input[0] == '+')
@@ -140,12 +139,22 @@ bool ScalarConverter::isInt(const std::string& input)
 
 bool ScalarConverter::isFloat(const std::string& input)
 {
+	double value = StrtoT<double>(input);
+
+	if (!isValidRangeT<float>(value))
+	{
+		return false;
+	}
 	size_t i = parseMantissa(input);
 	return (i != std::string::npos && i + 1 == input.length() && input[i] == 'f');
 }
 
 bool ScalarConverter::isDouble(const std::string& input)
 {
+	double value = StrtoT<double>(input);
+
+	if (value == HUGE_VAL || value == -HUGE_VAL)
+		return false;
 	size_t i = parseMantissa(input);
 	return (i != std::string::npos && i == input.length());
 }
@@ -153,7 +162,7 @@ bool ScalarConverter::isDouble(const std::string& input)
 void	ScalarConverter::printChar(double value)
 {
 	std::cout << "char: ";
-	if (value < 0 || value > 127)
+	if (!isValidRangeT<char>(value))
 	{
 		std::cout << IMPOSSIBLE_TAG << std::endl;
 		return;
@@ -176,7 +185,7 @@ void	ScalarConverter::printChar(double value)
 void	ScalarConverter::printInt(double value)
 {
 	std::cout << "int: ";
-	if (value < INT_MIN || value > INT_MAX)
+	if (!isValidRangeT<int>(value))
 		std::cout << IMPOSSIBLE_TAG << std::endl;
 	else
 		std::cout << static_cast<int>(value) << std::endl;
@@ -185,13 +194,13 @@ void	ScalarConverter::printInt(double value)
 void	ScalarConverter::printFloat(double value)
 {
 	std::cout << "float: ";
-	if (value > std::numeric_limits<float>::max() || value < -std::numeric_limits<float>::max())
+	if (!isValidRangeT<float>(value))
 	{
 		std::cout << IMPOSSIBLE_TAG << std::endl;
 		return;
 	}
 
-	float			f = static_cast<float>(value);
+	float f = static_cast<float>(value);
 	std::streamsize	prec = std::cout.precision();
 
 	if (f == std::floor(f) && std::fabs(f) < PRINT_FIXED_LIMIT)
@@ -208,11 +217,6 @@ void	ScalarConverter::printDouble(double value)
 	std::streamsize	prec = std::cout.precision();
 
 	std::cout << "double: ";
-	if (isInfinite(value))
-	{
-		std::cout << IMPOSSIBLE_TAG << std::endl;
-		return;
-	}
 	if (value == std::floor(value) && std::fabs(value) < PRINT_FIXED_LIMIT)
 		std::cout << std::fixed << std::setprecision(1) << value;
 	else
@@ -227,29 +231,47 @@ void	ScalarConverter::convert(const std::string &input)
 	if (handlePseudoLitteral(input))
 		return ;
 
-	double value = 0.0;
-
 	if (isChar(input))
 	{
-		value = static_cast<double>(input.length() == 1 ? input[0] : input[1]);
+		char c = (input.length() == 1) ? input[0] : input[1];
+		printChar(c);
+		printInt(static_cast<int>(c));
+		printFloat(static_cast<float>(c));
+		printDouble(static_cast<double>(c));
+	}
+	else if (isInt(input))
+	{
+		int i = StrtoT<int>(input);
+		printChar(static_cast<char>(i));
+		printInt(i);
+		printFloat(static_cast<float>(i));
+		printDouble(static_cast<double>(i));
 	}
 	else if (isFloat(input))
 	{
-		value = std::strtof(input.c_str(), NULL);
+		float f = StrtoT<float>(input);
+		printChar(static_cast<char>(f));
+		printInt(static_cast<int>(f));
+		printFloat(f);
+		printDouble(static_cast<double>(f));
 	}
-	else if (isInt(input) || isDouble(input))
+	else if (isDouble(input))
 	{
-		value = std::strtod(input.c_str(), NULL);
+		double d = StrtoT<double>(input);
+		printChar(static_cast<char>(d));
+		printInt(static_cast<int>(d));
+		printFloat(static_cast<float>(d));
+		printDouble(d);
 	}
 	else
 	{
-		printAllTypes(IMPOSSIBLE_TAG, IMPOSSIBLE_TAG, IMPOSSIBLE_TAG, IMPOSSIBLE_TAG);
-		return;
+		printAllTypes
+		(
+				IMPOSSIBLE_TAG,
+				IMPOSSIBLE_TAG,
+				IMPOSSIBLE_TAG,
+				IMPOSSIBLE_TAG 
+		);
 	}
-
-	printChar(value);
-	printInt(value);
-	printFloat(value);
-	printDouble(value);
 }
 
