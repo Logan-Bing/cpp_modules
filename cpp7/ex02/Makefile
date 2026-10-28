@@ -7,7 +7,7 @@ BUILD_DIR = build/
 CFLAGS = -std=c++98 -Wall -Wextra -Werror
 SRCS = $(addprefix $(SRCS_DIR), main.cpp)
 OBJS = $(addprefix $(BUILD_DIR), $(SRCS:.cpp=.o))
-HEADERS = $(addprefix $(INC_DIR), header.hpp) $(UTILS_DIR)Debug.hpp
+HEADERS = $(addprefix $(INC_DIR), header.hpp Array.hpp Array.tpp) $(UTILS_DIR)Debug.hpp
 
 DEBUG ?= 0
 ifeq ($(DEBUG),1)

@@ -1,11 +1,13 @@
-#include "../includes/Array.hpp"
+#include "Array.hpp"
+#include <ctime>
+#include <stdexcept>
 #include "iostream"
 
 template <typename T>
 Array<T>::Array(): elements_(NULL), length_(0) {}
 
 template <typename T>
-Array<T>::Array(unsigned int n): elements_(new T[n]), length_(n) {}
+Array<T>::Array(unsigned int n): elements_(new T[n]()), length_(n) {}
 
 template <typename T>
 Array<T>::Array(const Array& other): length_(other.length_)
@@ -18,11 +20,14 @@ Array<T>::Array(const Array& other): length_(other.length_)
 template <typename T>
 Array<T>& Array<T>::operator=(const Array& rhs)
 {
-	if (this != rhs)
+	if (this != &rhs)
 	{
-		delete[] elements_;
+		T* tmp = new T[rhs.length_];
 		for (size_t i = 0; i < length_; i++)
-			elements_[i] = rhs.elements_[i];
+			tmp[i] = rhs.elements_[i];
+		delete[] elements_;
+		elements_ = tmp;
+		length_ = rhs.length_;
 	}
 	return *this;
 }
@@ -36,7 +41,7 @@ Array<T>::~Array()
 template <typename T>
 const T& Array<T>::operator[](unsigned int index) const
 {
-	if (index > length_)
+	if (index >= length_)
 		throw std::out_of_range("Out of ranges");
 	return elements_[index];
 }
@@ -44,13 +49,13 @@ const T& Array<T>::operator[](unsigned int index) const
 template <typename T>
 T& Array<T>::operator[](unsigned int index)
 {
-	if (index > length_)
+	if (index >= length_)
 		throw std::out_of_range("Out of ranges");
 	return elements_[index];
 }
 
 template <typename T>
-unsigned int Array<T>::size()
+unsigned int Array<T>::size() const
 {
 	return length_;
 }

@@ -14,11 +14,13 @@ class Array
 		const T& operator[](unsigned int index) const;
 		T& operator[](unsigned int index);
 
-		unsigned int size();
+		unsigned int size() const;
 	
 	private:
 		T* elements_;
 		unsigned int length_;
 };
+
+#include "Array.tpp"
 
 #endif
