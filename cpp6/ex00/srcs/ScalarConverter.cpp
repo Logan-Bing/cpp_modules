@@ -115,9 +115,9 @@ bool ScalarConverter::isChar(const std::string& input)
 
 bool ScalarConverter::isInt(const std::string& input)
 {
-	double value = StrtoT<double>(input);
+	double value = strtod(input.c_str(), NULL);
 
-	if (!isValidRangeT<int>(value))
+	if (value > INT_MAX || value < INT_MIN)
 		return false;
 
 	size_t i = 0;
@@ -139,9 +139,9 @@ bool ScalarConverter::isInt(const std::string& input)
 
 bool ScalarConverter::isFloat(const std::string& input)
 {
-	double value = StrtoT<double>(input);
+	double value = std::strtod(input.c_str(), NULL);
 
-	if (!isValidRangeT<float>(value))
+	if (value > std::numeric_limits<float>::max() || value < -std::numeric_limits<float>::max())
 	{
 		return false;
 	}
@@ -151,7 +151,7 @@ bool ScalarConverter::isFloat(const std::string& input)
 
 bool ScalarConverter::isDouble(const std::string& input)
 {
-	double value = StrtoT<double>(input);
+	double value = std::strtod(input.c_str(), NULL);
 
 	if (value == HUGE_VAL || value == -HUGE_VAL)
 		return false;
@@ -159,42 +159,36 @@ bool ScalarConverter::isDouble(const std::string& input)
 	return (i != std::string::npos && i == input.length());
 }
 
-void	ScalarConverter::printChar(double value)
+void	ScalarConverter::printImpossible(const std::string& type)
+{
+	std::cout << type << ": " << IMPOSSIBLE_TAG << std::endl;
+}
+
+void	ScalarConverter::printChar(char c)
 {
 	std::cout << "char: ";
-	if (value < 0 || value > 127)
-	{
-		std::cout << IMPOSSIBLE_TAG << std::endl;
-		return;
-	}
 
-	char ch = static_cast<char>(value);
-
-	if (!std::isprint(ch))
+	if (!std::isprint(c))
 	{
 		std::cout << NON_DISPLAYABLE_TAG << std::endl;
 		return;
 	}
 	else
 	{
-		std::cout << "'" << ch << "'" << std::endl;
+		std::cout << "'" << c << "'" << std::endl;
 		return;
 	}
 }
 
-void	ScalarConverter::printInt(double value)
+void	ScalarConverter::printInt(int i)
 {
-	std::cout << "int: ";
-	if (!isValidRangeT<int>(value))
-		std::cout << IMPOSSIBLE_TAG << std::endl;
-	else
-		std::cout << static_cast<int>(value) << std::endl;
+	std::cout << "int: " << i << std::endl;
 }
 
-void	ScalarConverter::printFloat(double value)
+void	ScalarConverter::printFloat(float value)
 {
 	std::cout << "float: ";
-	if (!isValidRangeT<float>(value))
+	if (value > std::numeric_limits<float>::max() || value < -std::numeric_limits<float>::max())
 	{
 		std::cout << IMPOSSIBLE_TAG << std::endl;
 		return;
@@ -242,7 +236,12 @@ void	ScalarConverter::convert(const std::string &input)
 	else if (isInt(input))
 	{
 		int i = StrtoT<int>(input);
-		printChar(i);
+
+		if (i < 0 || i > 127)
+			printImpossible("char");
+		else
+			printChar(static_cast<char>(i));
+
 		printInt(i);
 		printFloat(static_cast<float>(i));
 		printDouble(static_cast<double>(i));
@@ -250,17 +249,39 @@ void	ScalarConverter::convert(const std::string &input)
 	else if (isFloat(input))
 	{
 		float f = StrtoT<float>(input);
-		printChar(f);
-		printInt(static_cast<int>(f));
+
+		if (f < 0 || f > 127)
+			printImpossible("char");
+		else
+			printChar(static_cast<char>(f));
+
+		if (f >= 2147483648.0f || f < -2147483648.0f)
+			printImpossible("int");
+		else
+			printInt(static_cast<int>(f));
+
 		printFloat(f);
 		printDouble(static_cast<double>(f));
 	}
 	else if (isDouble(input))
 	{
 		double d = StrtoT<double>(input);
-		printChar(d);
-		printInt(static_cast<int>(d));
-		printFloat(static_cast<float>(d));
+
+		if (d < 0 || d > 127)
+			printImpossible("char");
+		else
+			printChar(static_cast<char>(d));
+
+		if (d >= 2147483648.0f || d < -2147483648.0f)
+			printImpossible("int");
+		else
+			printInt(static_cast<int>(d));
+
+		if (d > std::numeric_limits<float>::max() || d < -std::numeric_limits<float>::max())
+			printImpossible("float");
+		else
+			printFloat(static_cast<float>(d));
+
 		printDouble(d);
 	}
 	else
