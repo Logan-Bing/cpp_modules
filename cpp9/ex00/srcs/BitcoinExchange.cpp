@@ -166,6 +166,9 @@ void	BitcoinExchange::fillData(const std::string& date, const std::string& rate)
 
 void	BitcoinExchange::handleMatchLine(const std::string& date, const std::string& amountStr)
 {
+	if (date == "date" && amountStr == "value")
+		return;
+
 	std::string year;
 	std::string month;
 	std::string day;
@@ -177,7 +180,10 @@ void	BitcoinExchange::handleMatchLine(const std::string& date, const std::string
 	std::getline(streamDate, day);
 
 	if (!isDateFormatValid(year, month, day))
+	{
+		std::cout << "Error: Invalid format, expected: [YYYY-MM-DD]" << std::endl;
 		return;
+	}
 
 	str_map::iterator matchedDate = data_.upper_bound(date);
 
