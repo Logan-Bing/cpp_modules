@@ -33,7 +33,6 @@ ScalarConverter&	ScalarConverter::operator=(const ScalarConverter& rhs)
 	(void)rhs;
 	if (this != &rhs)
 	{
-	
 	}
 	return *this;
 }
