@@ -2,6 +2,7 @@
 #include <exception>
 #include <iostream>
 #include <vector>
+#include <deque>
 #include <list>
 
 int main()
@@ -20,9 +21,9 @@ int main()
 
 	try
 	{
-		std::cout << easyfind<ints_v>(nums_v, 10) << std::endl;
-		std::cout << easyfind<ints_l>(nums_l, 20) << std::endl;
-		std::cout << easyfind<ints_d>(nums_d, 30) << std::endl;
+		std::cout << *easyfind<ints_v>(nums_v, 10) << std::endl;
+		std::cout << *easyfind<ints_l>(nums_l, 20) << std::endl;
+		std::cout << *easyfind<ints_d>(nums_d, 30) << std::endl;
 	}
 	catch (std::exception& e)
 	{
@@ -31,7 +32,7 @@ int main()
 
 	try
 	{
-		std::cout << easyfind<ints_v>(nums_v, 1) << std::endl;
+		std::cout << *easyfind<ints_v>(nums_v, 1) << std::endl;
 	}
 	catch (std::exception& e)
 	{

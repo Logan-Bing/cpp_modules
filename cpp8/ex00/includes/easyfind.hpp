@@ -5,12 +5,12 @@
 #include <stdexcept>
 
 template <typename T>
-int easyfind(T elements, int target)
+typename T::const_iterator easyfind(const T& elements, int target)
 {
-	typename T::iterator e = std::find(elements.begin(), elements.end(), target);
+	typename T::const_iterator e = std::find(elements.begin(), elements.end(), target);
 	if (e == elements.end())
 		throw std::out_of_range("out of range");
-	return *e;
+	return e;
 }
 
 #endif
