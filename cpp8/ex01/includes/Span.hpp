@@ -17,15 +17,7 @@ class Span {
   ~Span(void);
 
   void	addNumber(int n);
-
-  template <typename T>
-  void	addNumbers(T nums)
-  {
-	for (typename T::iterator it = nums.begin(); it != nums.end(); ++it)
-	{
-		addNumber(*it);
-	}
-  }
+  void	addNumbers(ints_v::const_iterator begin, ints_v::const_iterator last);
 
   unsigned int shortestSpan() const;
   unsigned int longestSpan() const;

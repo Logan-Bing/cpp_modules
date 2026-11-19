@@ -2,6 +2,8 @@
 #include "../utils/Debug.hpp"
 #include "../includes/iter.hpp"
 
+#include <algorithm>
+
 Span::Span(void): elements_(0), max_size_(0)
 {
 	DEBUG_MSG("Span Default Constuctor called\n");
@@ -43,27 +45,19 @@ void	Span::addNumber(int n)
 	elements_.push_back(n);
 }
 
+void	Span::addNumbers(ints_v::const_iterator begin, ints_v::const_iterator last)
+{
+	for (ints_v::const_iterator it = begin; begin != last; ++it)
+	{
+		elements_.push_back(*it);
+	}
+}
+
 unsigned int Span::shortestSpan() const
 {
 	if (!elements_.size() || elements_.size() == 1)
 		throw std::out_of_range("not enough elements");
-
-	ints_v gaps;
-
-	if (!elements_.empty())
-	{
-		ints_v::const_iterator last = elements_.end();
-		last--;
-
-		for (ints_v::const_iterator it = elements_.begin(); it != last; ++it)
-		{
-			ints_v::const_iterator next = it + 1;
-
-			*it > *next ? gaps.push_back(*it - *next) : gaps.push_back(*next - *it);
-		}
-	}
-
-	return *std::min_element(gaps.begin(), gaps.end());
+	return 0;
 }
 
 unsigned int Span::longestSpan() const
@@ -74,7 +68,7 @@ unsigned int Span::longestSpan() const
 	ints_v::const_iterator max = std::max_element(elements_.begin(), elements_.end());
 	ints_v::const_iterator min = std::min_element(elements_.begin(), elements_.end());
 
-	return *max - *min;
+	return static_cast<unsigned int>(*max) - static_cast<unsigned int>(*min);
 }
 
 void	Span::printElements() const

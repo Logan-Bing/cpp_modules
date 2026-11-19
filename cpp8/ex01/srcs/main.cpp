@@ -5,21 +5,14 @@
 
 int main()
 {
-	int seed_tab[] = {21, 15, 20, 25, 30};
-	int size = sizeof(seed_tab) / sizeof(int);
-	ints_v seed(seed_tab, seed_tab + size);
+	int seed[] = {1,10,20,30,100,1000000000};
+	int size = sizeof(seed) / sizeof(int);
 
+
+	ints_v nums(seed, seed + size);
 	Span s(size);
-
-	try
-	{
-		s.addNumbers<ints_v>(seed);
-		std::cout << s.shortestSpan() << std::endl;
-	}
-	catch (std::exception& e)
-	{
-		std::cout << e.what() << std::endl;
-	}
+	s.addNumbers(nums.begin(), nums.end());
+	s.printElements();
 
 	return 0;
 }

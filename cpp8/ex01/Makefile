@@ -5,7 +5,7 @@ INC_DIR = includes/
 UTILS_DIR = utils/
 BUILD_DIR = build/
 STD = -std=c++98
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3 -O0
 SRCS = $(addprefix $(SRCS_DIR), main.cpp Span.cpp)
 OBJS = $(addprefix $(BUILD_DIR), $(SRCS:.cpp=.o))
 HEADERS = $(addprefix $(INC_DIR), header.hpp Span.hpp) $(UTILS_DIR)Debug.hpp

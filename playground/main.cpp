@@ -1,3 +1,4 @@
+#include <climits>
 #include <cstdlib>
 #include <exception>
 #include <iostream>
@@ -10,6 +11,11 @@
 
 int main()
 {
-	std::cout << static_cast<int>(std::numeric_limits<char>::max()) << std::endl;
-	std::cout << static_cast<int>(std::numeric_limits<char>::min()) << std::endl;
+	int max = INT_MAX;
+	int min = INT_MIN;
+
+	unsigned int x = max - min;
+
+	std::cout << x;
+	return 0;
 }
