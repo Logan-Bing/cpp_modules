@@ -62,7 +62,7 @@ class ScalarConverter {
   template <typename T>
   static bool isValidRangeT(double value)
   {
-		return value < std::numeric_limits<T>::max() && value > std::numeric_limits<T>::min();
+		return value < std::numeric_limits<T>::max() && value > -std::numeric_limits<T>::max();
   }
 
   static size_t	parseMantissa(const std::string& input);
@@ -70,9 +70,10 @@ class ScalarConverter {
   static bool	isInt(const std::string& input);
   static bool	isFloat(const std::string& input);
   static bool	isDouble(const std::string& input);
-  static void	printChar(double value);
-  static void	printInt(double value);
-  static void	printFloat(double value);
+  static void	printImpossible(const std::string& type);
+  static void	printChar(char c);
+  static void	printInt(int i);
+  static void	printFloat(float f);
   static void	printDouble(double value);
 
 };

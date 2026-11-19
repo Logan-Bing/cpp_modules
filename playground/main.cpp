@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <exception>
 #include <iostream>
 #include <istream>
@@ -9,7 +10,6 @@
 
 int main()
 {
-	double d = std::numeric_limits<double>::max();
-
-	std::cout << d << std::endl;
+	std::cout << static_cast<int>(std::numeric_limits<char>::max()) << std::endl;
+	std::cout << static_cast<int>(std::numeric_limits<char>::min()) << std::endl;
 }

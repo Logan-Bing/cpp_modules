@@ -36,9 +36,9 @@ class BitcoinExchange {
  private:
   static float	ftAtof(const std::string& str);
   static bool	handleAmountError(float amount);
-  static bool	isAllDigits(const std::string& str);
   static bool	isLeapYear(int year);
   static int	dayInMonth(const std::string& month, const std::string& year);
+  static bool	checkAmountFormat(const std::string& amount);
   static bool	checkYearFormat(const std::string& year);
   static bool	checkMonthFormat(const std::string& month);
   static bool	checkDayFormat(const std::string& day, const std::string& month, const std::string& year);

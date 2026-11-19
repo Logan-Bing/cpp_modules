@@ -1,5 +1,6 @@
 #include "../includes/BitcoinExchange.hpp"
 #include "../utils/Debug.hpp"
+#include <cctype>
 #include <exception>
 #include <fstream>
 #include <sstream>
@@ -98,16 +99,6 @@ bool	BitcoinExchange::handleAmountError(float amount)
 	return true;
 }
 
-bool BitcoinExchange::isAllDigits(const std::string& str)
-{
-	for (std::string::const_iterator it = str.begin(); it != str.end(); ++it)
-	{
-		if (*it < '0' || *it > '9')
-			return 0;
-	}
-	return 1;
-}
-
 bool BitcoinExchange::isLeapYear(int year)
 {
 	return ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0));
@@ -148,6 +139,16 @@ bool BitcoinExchange::checkMonthFormat(const std::string& month)
 		&& month > "00" && month < "13";
 }
 
+bool	BitcoinExchange::checkAmountFormat(const std::string& amount)
+{
+	for (std::string::const_iterator it = amount.begin(); it != amount.end(); ++it)
+	{
+		if (std::isdigit(*amount.c_str()))
+			return false;
+	}
+	return true;
+}
+
 bool BitcoinExchange::checkDayFormat(const std::string& day, const std::string& month, const std::string& year)
 {
 	return day.length() == 2 && isAllDigits(day)
@@ -166,6 +167,9 @@ void	BitcoinExchange::fillData(const std::string& date, const std::string& rate)
 
 void	BitcoinExchange::handleMatchLine(const std::string& date, const std::string& amountStr)
 {
+	if (date == "date" && amountStr == "value")
+		return;
+
 	std::string year;
 	std::string month;
 	std::string day;
@@ -177,7 +181,10 @@ void	BitcoinExchange::handleMatchLine(const std::string& date, const std::string
 	std::getline(streamDate, day);
 
 	if (!isDateFormatValid(year, month, day))
+	{
+		std::cout << "Error: Invalid format, expected: [YYYY-MM-DD]" << std::endl;
 		return;
+	}
 
 	str_map::iterator matchedDate = data_.upper_bound(date);
 
@@ -186,7 +193,20 @@ void	BitcoinExchange::handleMatchLine(const std::string& date, const std::string
 		std::cout << "invalid" << std::endl;
 		return;
 	}
+
+	if (matchedDate == data_.begin())
+	{
+		std::cout << "Error: bad input => " << date << " | " << amountStr << std::endl;
+		return;
+	}
+
 	matchedDate--;
+
+	if (checkAmountFormat(amountStr))
+	{
+		std::cout << "Error: bad input => " << date << " | " << amountStr << std::endl;
+		return;
+	}
 
 	float amount = ftAtof(amountStr);
 
