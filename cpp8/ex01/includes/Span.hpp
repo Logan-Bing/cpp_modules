@@ -17,7 +17,7 @@ class Span {
   ~Span(void);
 
   void	addNumber(int n);
-  void	addNumbers(ints_v::const_iterator begin, ints_v::const_iterator last);
+  void	addNumbers(const ints_v::const_iterator& begin, const ints_v::const_iterator& last);
 
   unsigned int shortestSpan() const;
   unsigned int longestSpan() const;
@@ -26,7 +26,7 @@ class Span {
 
  private:
   ints_v elements_;
-  unsigned int max_size_;
+  unsigned int size_;
 };
 
 #endif
