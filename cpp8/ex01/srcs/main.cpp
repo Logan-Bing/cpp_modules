@@ -3,9 +3,12 @@
 #include <exception>
 #include <iostream>
 #include <vector>
+#include <cstdlib>
+#include <ctime>
 
 #define ROWS 5
 #define COLS 5
+#define BIG_SIZE 10000
 
 void	test(const Span& s)
 {
@@ -43,6 +46,19 @@ int main()
 		Span s(COLS);
 		s.addNumbers(v.begin(), v.end());
 		test(s);
+		std::cout << "-----" << std::endl;
+	}
+
+	// Test avec 10 000 éléments
+	{
+		ints_v v;
+		for (int i = 0; i < BIG_SIZE; i++)
+			v.push_back(i * 100);
+		v[4243] = 424201; // 424200 existe déjà à l'index 4242
+		Span big(BIG_SIZE);
+		big.addNumbers(v.begin(), v.end());
+		test(big);
+		std::cout << "expected -> shortest: 1, longest: 999900" << std::endl;
 		std::cout << "-----" << std::endl;
 	}
 

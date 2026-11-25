@@ -2,6 +2,7 @@
 #define __MUTANTSTACK_HPP__
 
 #include <iostream>
+#include <stack>
 
 template <typename T>
 class MutantStack : public std::stack<T>
@@ -14,6 +15,8 @@ class MutantStack : public std::stack<T>
   ~MutantStack(void);
 
   typedef typename std::stack<T>::container_type::iterator iterator;
+  iterator begin();
+  iterator end();
 
  private:
 
